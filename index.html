@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calculadora de Cálculo de Texto Tipográfico | UTP</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--navy-mid:#12203d;--orange:#e8732a;--orange-glow:#ff8c42;--cream:#f5f0e8;--cream-dark:#e8e0d0;--teal:#2bb5a0;--red:#e74c3c;--text-primary:#f5f0e8;--text-secondary:rgba(245,240,232,.7);--text-muted:rgba(245,240,232,.45);--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.08);--r-sm:6px;--r-md:12px;--r-lg:20px;--r-xl:28px;--tr:.35s cubic-bezier(.22,1,.36,1);--fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--fb);background:var(--navy);color:var(--text-primary);line-height:1.7;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 20% 10%,rgba(232,115,42,.06),transparent 70%),radial-gradient(ellipse 60% 80% at 80% 90%,rgba(43,181,160,.04),transparent 70%);pointer-events:none;z-index:0}
+a{color:var(--orange);text-decoration:none}::selection{background:var(--orange);color:var(--navy)}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:var(--navy)}::-webkit-scrollbar-thumb{background:var(--orange);border-radius:3px}
+.ctr{max-width:1200px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.tag{display:inline-flex;align-items:center;gap:8px;background:rgba(232,115,42,.1);border:1px solid rgba(232,115,42,.25);color:var(--orange);font-family:var(--fm);font-size:.7rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:16px}
+.tag::before{content:'';width:6px;height:6px;background:var(--orange);border-radius:50%;animation:pd 2s infinite}
+@keyframes pd{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
+h1,h2,h3{font-family:var(--fd);font-weight:700;line-height:1.15}
+h1{font-size:clamp(2rem,5vw,3rem)}h2{font-size:clamp(1.4rem,3.5vw,2rem);margin-bottom:12px}h3{font-size:clamp(1rem,2.5vw,1.3rem)}
+.hl{color:var(--orange)}.tl{color:var(--teal)}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:rgba(10,22,40,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--glass-border);padding:0 24px}
+.nav-i{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}
+.logo{font-family:var(--fd);font-weight:800;font-size:.95rem}.logo span{color:var(--orange)}
+.nav-l{display:flex;gap:2px;list-style:none}
+.nav-l a{font-size:.72rem;font-weight:500;color:var(--text-secondary);padding:6px 10px;border-radius:var(--r-sm);transition:var(--tr)}
+.nav-l a:hover,.nav-l a.active{color:var(--orange);background:rgba(232,115,42,.08)}
+.nav-t{display:none;background:none;border:none;color:var(--text-primary);font-size:1.5rem;cursor:pointer}
+
+/* CARDS */
+.gc{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:28px;backdrop-filter:blur(12px);transition:var(--tr)}
+.gc:hover{border-color:rgba(232,115,42,.2)}
+
+/* HERO */
+#hero{padding:110px 0 50px;text-align:center}
+.hb{display:inline-block;background:linear-gradient(135deg,rgba(232,115,42,.15),rgba(43,181,160,.1));border:1px solid rgba(232,115,42,.3);padding:6px 18px;border-radius:100px;font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;color:var(--orange);margin-bottom:20px;text-transform:uppercase}
+#hero h1{margin-bottom:16px;background:linear-gradient(135deg,var(--cream),var(--orange-glow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+#hero .hs{font-size:1rem;color:var(--text-secondary);max-width:680px;margin:0 auto 30px}
+
+/* SYS CARDS */
+.ss{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px;margin:0 auto}
+.sc{background:var(--glass);border:2px solid var(--glass-border);border-radius:var(--r-lg);padding:22px;cursor:pointer;transition:var(--tr);text-align:left;position:relative;overflow:hidden}
+.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--orange),var(--teal));transform:scaleX(0);transition:var(--tr)}
+.sc:hover::before,.sc.active::before{transform:scaleX(1)}
+.sc.active{border-color:var(--orange);background:rgba(232,115,42,.06)}
+.sc h3{font-size:1rem;margin-bottom:4px}
+.sv{display:inline-block;background:rgba(232,115,42,.12);color:var(--orange);font-family:var(--fm);font-weight:600;font-size:.78rem;padding:3px 8px;border-radius:var(--r-sm);margin:2px 0}
+.cl{margin-top:8px;font-size:.7rem;color:var(--text-muted);line-height:1.5}.cl strong{color:var(--cream)}
+
+/* CALC */
+#calc{padding:70px 0}
+.calc-wrap{display:grid;grid-template-columns:380px 1fr;gap:24px;margin:30px 0}
+.cp{background:var(--navy-mid);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:24px}
+.cp h3{font-size:.95rem;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.sn{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--orange);color:var(--navy);font-family:var(--fm);font-size:.72rem;font-weight:700;border-radius:50%;flex-shrink:0}
+.fg{margin-bottom:12px}
+.fg label{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:500;color:var(--text-secondary);margin-bottom:4px;cursor:pointer}
+.fg label .req{color:var(--red)}
+.fg label .info-btn{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:rgba(232,115,42,.15);color:var(--orange);font-size:.6rem;font-weight:700;cursor:pointer;border:1px solid rgba(232,115,42,.3);transition:var(--tr);flex-shrink:0}
+.fg label .info-btn:hover{background:var(--orange);color:var(--navy)}
+.fr{display:flex;gap:10px;align-items:flex-end}.fr .fg{flex:1}
+input[type="number"],input[type="text"],input[type="email"],select,textarea{width:100%;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);color:var(--cream);font-family:var(--fb);font-size:.85rem;padding:9px 12px;border-radius:var(--r-sm);transition:var(--tr);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(232,115,42,.12)}
+input.error,select.error{border-color:var(--red)}
+.error-msg{font-size:.68rem;color:var(--red);margin-top:3px;display:none}.error-msg.show{display:block}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23e8732a' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:32px}
+select option{background:var(--navy);color:var(--cream)}
+.ut{font-family:var(--fm);font-size:.68rem;color:var(--teal);background:rgba(43,181,160,.1);padding:2px 6px;border-radius:3px;white-space:nowrap;flex-shrink:0;align-self:center}
+
+/* FP mode selector */
+.fp-mode{display:flex;gap:4px;margin-bottom:8px}
+.fp-mode button{flex:1;font-family:var(--fm);font-size:.62rem;padding:5px 4px;border:1px solid var(--glass-border);background:var(--glass);color:var(--text-muted);border-radius:var(--r-sm);cursor:pointer;transition:var(--tr);text-align:center}
+.fp-mode button.active{border-color:var(--orange);color:var(--orange);background:rgba(232,115,42,.08)}
+
+.btn-calc{background:linear-gradient(135deg,var(--orange),#d4621c);color:var(--navy);font-family:var(--fd);font-weight:700;font-size:.95rem;padding:12px 24px;border-radius:var(--r-md);width:100%;border:none;cursor:pointer;transition:var(--tr);display:flex;align-items:center;justify-content:center;gap:8px}
+.btn-calc:hover{box-shadow:0 4px 20px rgba(232,115,42,.4)}
+
+/* RESULTS COLUMN VIS */
+.rv{display:flex;flex-direction:column;gap:16px}
+.rv-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.rv-header h3{margin:0}
+
+/* Column visual box */
+.col-box{background:rgba(0,0,0,.15);border:2px dashed rgba(232,115,42,.5);border-radius:4px;position:relative;padding:36px 16px 20px 48px;min-height:260px;overflow:visible;box-shadow:inset 0 0 30px rgba(0,0,0,.2)}
+.col-box .col-w-bracket{position:absolute;top:8px;left:48px;right:16px;height:8px;border-left:2px solid var(--teal);border-right:2px solid var(--teal);border-top:2px solid var(--teal)}
+.col-w-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--navy);font-family:var(--fm);font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:3px;white-space:nowrap;z-index:10}
+.col-h-bracket{position:absolute;right:-14px;top:36px;bottom:20px;width:8px;border-top:2px solid var(--orange);border-bottom:2px solid var(--orange);border-right:2px solid var(--orange)}
+.col-h-label{position:absolute;right:-8px;top:50%;transform:translateY(-50%) rotate(90deg);background:var(--orange);color:var(--navy);font-family:var(--fm);font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:3px;white-space:nowrap}
+.col-golpe-badge{position:absolute;top:10px;right:30px;background:linear-gradient(135deg,var(--orange),#d4621c);color:var(--navy);font-family:var(--fm);font-weight:700;font-size:.68rem;padding:3px 12px;border-radius:100px;z-index:10}
+.col-ln{position:absolute;left:6px;top:36px;width:34px;text-align:right;font-family:var(--fm);font-size:.6rem;color:rgba(232,115,42,.5);user-select:none;padding-right:4px;border-right:1px solid rgba(232,115,42,.2)}
+.col-text{font-family:'Georgia','Times New Roman',serif;text-align:justify;hyphens:auto;-webkit-hyphens:auto;word-break:break-word;overflow-wrap:break-word;color:var(--cream-dark)}
+
+/* Hotspots - clearly visible, not clipped */
+.hs-out{position:absolute;z-index:100;display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 10px 4px 4px;border-radius:100px;background:rgba(10,22,40,.8);border:1px solid rgba(232,115,42,.3);transition:var(--tr);backdrop-filter:blur(4px)}
+.hs-out:hover{border-color:var(--orange);background:rgba(232,115,42,.1)}
+.hs-out .hd{width:10px;height:10px;border-radius:50%;flex-shrink:0;animation:hsp 2.5s infinite}
+@keyframes hsp{0%,100%{box-shadow:0 0 0 0 rgba(232,115,42,.4)}50%{box-shadow:0 0 0 6px rgba(232,115,42,0)}}
+.hs-out .hl-text{font-family:var(--fm);font-size:.6rem;color:var(--cream);white-space:nowrap}
+
+/* Result chips */
+.rc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.chip{background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:10px;text-align:center;transition:var(--tr)}
+.chip.active{border-color:var(--orange);background:rgba(232,115,42,.06)}
+.chip-l{font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px}
+.chip-v{font-family:var(--fd);font-size:1.3rem;font-weight:800;color:var(--orange);line-height:1.2}
+.chip-u{font-family:var(--fm);font-size:.6rem;color:var(--text-secondary)}
+.chip.big{grid-column:1/-1;background:rgba(43,181,160,.05);border-color:rgba(43,181,160,.2)}
+.chip.big .chip-v{color:var(--teal);font-size:1.6rem}
+.chip.big .pages-text{font-family:var(--fd);font-size:.85rem;font-weight:600;color:var(--teal);margin-top:2px}
+
+/* Dialog */
+.dialog-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:2000;display:none;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.dialog-overlay.show{display:flex}
+.dialog-box{background:var(--navy-mid);border:1px solid var(--orange);border-radius:var(--r-lg);padding:28px;max-width:480px;width:90%;max-height:80vh;overflow-y:auto;position:relative}
+.dialog-box h3{font-size:1.1rem;color:var(--orange);margin-bottom:8px}
+.dialog-box p{font-size:.85rem;color:var(--text-secondary);line-height:1.7}
+.dialog-close{position:absolute;top:12px;right:12px;background:none;border:none;color:var(--text-muted);font-size:1.2rem;cursor:pointer;transition:var(--tr)}
+.dialog-close:hover{color:var(--orange)}
+.dialog-formula{font-family:var(--fm);font-size:.88rem;color:var(--orange);background:rgba(232,115,42,.08);padding:10px 14px;border-radius:var(--r-sm);border-left:3px solid var(--orange);margin:10px 0}
+
+/* FORMULA WALK */
+#formula{padding:70px 0}
+.wt{position:relative;margin:30px 0}.wt::before{content:'';position:absolute;left:22px;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--orange),var(--teal),var(--orange));border-radius:2px}
+.ws{position:relative;padding:0 0 28px 60px;opacity:0;transform:translateX(-16px);transition:opacity .6s,transform .6s}
+.ws.visible{opacity:1;transform:translateX(0)}
+.ws .si{position:absolute;left:4px;top:0;width:40px;height:40px;border-radius:50%;background:var(--navy);border:3px solid var(--glass-border);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-weight:700;font-size:.8rem;color:var(--text-muted);z-index:2;transition:var(--tr)}
+.ws.visible .si{background:var(--orange);color:var(--navy);border-color:var(--orange)}
+.ws.done .si{background:var(--teal);border-color:var(--teal)}
+.wc{background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--r-lg);overflow:hidden;transition:var(--tr)}
+.ws.visible .wc{border-color:rgba(232,115,42,.15)}
+.wc-h{background:rgba(232,115,42,.06);padding:14px 20px;border-bottom:1px solid var(--glass-border);display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.wc-h h3{font-size:.9rem;margin:0}
+.wfb{font-family:var(--fm);font-size:.75rem;font-weight:600;color:var(--orange);background:rgba(232,115,42,.12);padding:4px 12px;border-radius:100px;border:1px solid rgba(232,115,42,.25);white-space:nowrap}
+.wc-b{padding:14px 20px}
+.wc-b p{font-size:.82rem;color:var(--text-secondary);line-height:1.6;margin-bottom:8px}
+.eq{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:10px 14px;margin:8px 0;background:rgba(0,0,0,.2);border-radius:var(--r-md);border-left:3px solid var(--orange);font-family:var(--fm);font-size:.85rem}
+.ev{display:inline-flex;align-items:center;justify-content:center;background:rgba(232,115,42,.12);color:var(--orange);padding:3px 10px;border-radius:var(--r-sm);font-weight:600;min-width:32px;transition:all .4s}
+.ev.res{background:rgba(43,181,160,.15);color:var(--teal);font-size:1rem;padding:4px 12px}
+.eo{color:var(--text-muted)}
+.el{font-size:.58rem;color:var(--text-muted);margin-left:4px}
+
+/* ANATOMY - removed, kept interlineado */
+#anatomy{padding:70px 0}
+
+/* Interlineado - using inline styles */
+
+/* FP Section */
+#fp-section{padding:70px 0}
+.fp-gen{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:20px 0}
+.fpg{background:var(--navy-mid);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:12px;text-align:center;transition:var(--tr);cursor:pointer}
+.fpg:hover,.fpg.active{border-color:var(--orange);background:rgba(232,115,42,.06)}
+.fpg .fr{font-family:var(--fm);font-size:.68rem;color:var(--text-muted);margin-bottom:3px}
+.fpg .fv{font-family:var(--fd);font-size:1.4rem;font-weight:800;color:var(--orange)}
+.fptw{overflow-x:auto;margin:24px 0;border-radius:var(--r-md);border:1px solid var(--glass-border)}
+table.fpt{width:100%;border-collapse:collapse;font-size:.78rem}
+table.fpt th{background:rgba(232,115,42,.12);color:var(--orange);font-family:var(--fm);font-weight:600;font-size:.68rem;padding:10px 8px;text-align:center;border-bottom:2px solid rgba(232,115,42,.3);position:sticky;top:0;white-space:nowrap}
+table.fpt th:first-child{text-align:left;position:sticky;left:0;z-index:2;background:var(--navy-mid)}
+table.fpt td{padding:8px;text-align:center;border-bottom:1px solid rgba(255,255,255,.04);font-family:var(--fm);font-size:.75rem;transition:var(--tr)}
+table.fpt td:first-child{text-align:left;font-family:var(--fb);font-weight:500;color:var(--cream);position:sticky;left:0;background:var(--navy-mid);white-space:nowrap}
+table.fpt tr:hover td{background:rgba(232,115,42,.04)}
+table.fpt td.ac{background:rgba(232,115,42,.2)!important;color:var(--orange);font-weight:700}
+
+/* FP Calc box */
+.fpc-box{background:rgba(43,181,160,.05);border:1px solid rgba(43,181,160,.2);border-radius:var(--r-md);padding:20px;margin:20px 0}
+.fpc-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+
+/* Submission */
+#sub{padding:70px 0}
+.form-c{max-width:700px;margin:0 auto}
+.fa{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:6px;font-family:var(--fd);font-weight:600;font-size:.82rem;padding:10px 20px;border-radius:var(--r-sm);border:none;cursor:pointer;transition:var(--tr)}
+.btn-p{background:var(--orange);color:var(--navy)}.btn-p:hover{background:var(--orange-glow);transform:translateY(-2px)}
+.btn-s{background:transparent;color:var(--teal);border:1px solid var(--teal)}.btn-s:hover{background:rgba(43,181,160,.1)}
+.btn-o{background:transparent;color:var(--cream);border:1px solid var(--glass-border)}.btn-o:hover{border-color:var(--orange);color:var(--orange)}
+
+/* Footer */
+footer{background:var(--navy-mid);border-top:1px solid var(--glass-border);padding:28px 24px;text-align:center}
+.fb{font-family:var(--fd);font-weight:800;font-size:.85rem;color:var(--orange);margin-bottom:6px}
+.fi{font-size:.75rem;color:var(--text-muted);line-height:1.8}.fi span{color:var(--text-secondary)}
+.fdiv{display:inline-block;width:4px;height:4px;background:var(--orange);border-radius:50%;vertical-align:middle;margin:0 8px;opacity:.5}
+
+/* Tooltip */
+.gtt{position:fixed;z-index:9999;background:var(--navy);border:1px solid var(--orange);border-radius:var(--r-md);padding:12px 16px;pointer-events:none;opacity:0;transition:opacity .2s;max-width:260px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.gtt.show{opacity:1}
+.gtt .tt-tag{font-family:var(--fm);font-size:.58rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:3px;opacity:.6}
+.gtt .tt-t{font-family:var(--fd);font-weight:700;font-size:.88rem;margin-bottom:3px}
+.gtt .tt-d{font-size:.75rem;color:var(--text-secondary);line-height:1.4}
+.gtt .tt-bar{width:100%;height:3px;border-radius:2px;margin-top:6px}
+
+@media print{body{background:#fff!important;color:#111!important}nav,.btn,.ss,.nav-t,.anat-ctrls,.lt,.fp-mode{display:none!important}.gc,.cp,.wc,.col-box{background:#f8f8f8!important;border:1px solid #ddd!important;color:#111!important;box-shadow:none!important}.eq{background:#f0f0f0!important}.ev,.hl,.chip-v{color:#c55a1b!important}h1,h2,h3{color:#111!important;-webkit-text-fill-color:#111!important}footer{background:#f8f8f8!important;border-top:2px solid #111!important}.fb,.fi,.fi span{color:#111!important}@page{margin:1.5cm}}
+@media(max-width:900px){.ss,.calc-wrap,.fpc-grid{grid-template-columns:1fr}.rc{grid-template-columns:1fr 1fr}.wt::before{left:14px}.ws{padding-left:48px}.ws .si{left:0;width:32px;height:32px;font-size:.7rem}}
+@media(max-width:600px){.ctr{padding:0 14px}.gc,.cp{padding:18px}.nav-l{display:none;position:absolute;top:56px;left:0;right:0;background:rgba(10,22,40,.95);backdrop-filter:blur(20px);flex-direction:column;padding:14px;border-bottom:1px solid var(--glass-border)}.nav-l.open{display:flex}.nav-t{display:block}.fr{flex-direction:column}.fa{flex-direction:column}.btn{width:100%;justify-content:center}.eq{font-size:.75rem}.fp-gen{grid-template-columns:repeat(2,1fr)}.rc{grid-template-columns:1fr}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.reveal.visible{opacity:1;transform:translateY(0)}
+input[type="range"]::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;background:linear-gradient(135deg,var(--orange),var(--orange-glow));border-radius:50%;cursor:pointer;transition:transform .2s}
+input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2)}
+input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--orange);border-radius:50%;cursor:pointer;border:none}
+</style>
+</head>
+<body>
+<div class="gtt" id="gTip"><div class="tt-tag"></div><div class="tt-t"></div><div class="tt-d"></div><div class="tt-bar"></div></div>
+
+<!-- DIALOGS -->
+<div class="dialog-overlay" id="dlg-ancho" onclick="if(event.target===this)hideDialog('ancho')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('ancho')">✕</button><h3>Ø — Ancho de Columnaje</h3><p>El <strong>ancho de columna (Ø)</strong> es la medida horizontal del espacio destinado al texto, expresada en unidades tipográficas duodecimales:</p><div class="dialog-formula">Sistema Anglosajón → picas (p)<br>Sistema Francés → cíceros (c)</div><p>Se mide en InDesign desde el borde izquierdo al borde derecho de la columna de texto (sin incluir márgenes ni medianil). Puedes escribir el valor seguido de <strong>"p"</strong> para picas o <strong>"c"</strong> para cíceros.</p><p><strong>Sistema duodecimal:</strong> 1 pica = 12 puntos PostScript, 1 cícero = 12 puntos Didot. No confundir con el sistema decimal métrico.</p></div></div>
+
+<div class="dialog-overlay" id="dlg-act" onclick="if(event.target===this)hideDialog('act')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('act')">✕</button><h3>A.C.T. — Alto de Caja Tipográfica</h3><p>Es la <strong>altura de la mancha de impresión</strong> (área útil de texto en la página), medida en centímetros. En Adobe InDesign se obtiene así:</p><p style="font-size:.82rem;line-height:1.7"><strong>1.</strong> Menú <em>Archivo → Configuración del documento</em><br><strong>2.</strong> Identifica la altura de página<br><strong>3.</strong> Menú <em>Maquetación → Márgenes y columnas</em><br><strong>4.</strong> Resta margen superior + margen inferior de la altura de página<br><strong>5.</strong> El resultado es el A.C.T.</p><div class="dialog-formula">A.C.T. = Altura de página − (margen superior + margen inferior)</div><p>Los valores estándar varían según el tipo de publicación. Si no tienes un valor específico, selecciona el tipo de publicación en el formulario.</p></div></div>
+
+<div class="dialog-overlay" id="dlg-cr" onclick="if(event.target===this)hideDialog('cr')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('cr')">✕</button><h3>C.r. — Cantidad de Renglones</h3><div class="dialog-formula">#G.m. ÷ C.c.p.l. = C.r.</div><p>Dividimos el total de <strong>golpes</strong> (caracteres del manuscrito, incluyendo espacios y puntuación) entre los caracteres por línea. El resultado es la cantidad total de renglones que ocupará el texto compuesto.</p></div></div>
+
+<div class="dialog-overlay" id="dlg-atcp" onclick="if(event.target===this)hideDialog('atcp')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('atcp')">✕</button><h3>A.T.C.p. — Altura Total de Columna en Puntos</h3><div class="dialog-formula">C.r. × I. = A.T.C.p.</div><p>Multiplicamos los renglones por el <strong>interlineado</strong> — la distancia en puntos entre líneas base consecutivas. El resultado es la altura total del texto en puntos tipográficos.</p></div></div>
+
+<div class="dialog-overlay" id="dlg-fp" onclick="if(event.target===this)hideDialog('fp')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('fp')">✕</button><h3>F.p. — Factor Puntaje</h3><p>Coeficiente que indica cuántos caracteres caben por cada unidad de columna (pica o cícero) para una fuente y tamaño específicos.</p><p><strong>Específico:</strong> Valor exacto por tipografía y puntaje (tabla de referencia).</p><p><strong>General:</strong> Valor promedio por rango de puntajes.</p><p><strong>Manual:</strong> Calculado midiendo una composición real en InDesign (caracteres en página ÷ líneas ÷ ancho en picas).</p></div></div>
+
+<div class="dialog-overlay" id="dlg-golpe" onclick="if(event.target===this)hideDialog('golpe')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('golpe')">✕</button><h3>#G.m. — Golpes del Manuscrito</h3><p>Un <strong>"golpe"</strong> es cada carácter individual del texto: letras, números, espacios, signos de puntuación. En Microsoft Word se obtiene en Revisar → Contar palabras → "Caracteres (con espacios)".</p></div></div>
+
+<div class="dialog-overlay" id="dlg-inter" onclick="if(event.target===this)hideDialog('inter')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('inter')">✕</button><h3>I. — Interlineado</h3><p>Distancia vertical entre las <strong>líneas base</strong> de dos renglones consecutivos, medida en puntos tipográficos. Ejemplo: un texto a 10 pts con interlineado 12 pts se expresa como "10/12" (diez sobre doce).</p><p>En Adobe InDesign se configura en el panel Carácter o mediante el atajo Alt + ↑/↓.</p></div></div>
+
+<!-- NAV -->
+<nav><div class="nav-i"><div class="logo">d3magin<span>design</span></div><button class="nav-t" onclick="document.querySelector('.nav-l').classList.toggle('open')">☰</button><ul class="nav-l"><li><a href="#hero" class="active">Inicio</a></li><li><a href="#calc">Calculadora</a></li><li><a href="#formula">Fórmula</a></li><li><a href="#anatomy">Interlineado</a></li><li><a href="#fp-section">F.Puntaje</a></li><li><a href="#sub">Enviar</a></li></ul></div></nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="hero"><div class="ctr">
+<div class="hb">Semana 2 · Diseño Editorial</div>
+<h1>Calculadora de<br>Cálculo de <span class="hl">Texto</span> Tipográfico</h1>
+<p class="hs">Herramienta interactiva para calcular la extensión de texto compuesto usando sistemas de medición tipográfica anglosajón y francés.</p>
+<div class="tag">Paso 1 — Selecciona el sistema tipográfico</div>
+<div class="ss">
+<div class="sc active" data-s="a" onclick="selSys('a')"><h3>🇬🇧 Sistema Anglosajón (PostScript)</h3><div style="display:flex;gap:4px;flex-wrap:wrap;margin:6px 0"><span class="sv">1 pt = 0.353 mm</span><span class="sv">1 pica = 12 pts</span></div><div class="cl"><strong>Países:</strong> EE.UU., Reino Unido, Canadá, Australia, Japón, Corea del Sur, India — estándar DTP digital.</div></div>
+<div class="sc" data-s="f" onclick="selSys('f')"><h3>🇫🇷 Sistema Francés (Didot)</h3><div style="display:flex;gap:4px;flex-wrap:wrap;margin:6px 0"><span class="sv">1 pt = 0.376 mm</span><span class="sv">1 cícero = 12 pts</span></div><div class="cl"><strong>Países:</strong> Francia, Alemania, España, Italia, Portugal, Bélgica, Suiza, Austria, Países Bajos, América Latina.</div></div>
+</div>
+</div></section>
+
+<!-- ═══ CALCULATOR + REAL-TIME COLUMN ═══ -->
+<section id="calc"><div class="ctr">
+<div class="tag">Paso 2 — Calculadora Interactiva</div>
+<h2>Cálculo de <span class="hl">Texto</span> Compuesto</h2>
+<div class="calc-wrap">
+<!-- INPUT PANEL -->
+<div class="cp">
+<h3><span class="sn">▶</span> Registrar Datos del Texto</h3>
+
+<div class="fg"><label>Tipo de Letra <span class="req">*</span></label>
+<input type="text" id="inFont" list="fontList" placeholder="Escribe o selecciona la fuente...">
+<datalist id="fontList"><option value="Baskerville"><option value="Baskerville italic"><option value="Baskerville Bold"><option value="Baskerville Bold Italic"><option value="Bauhaus Light (ITC)"><option value="Bauhaus Medium (ITC)"><option value="Bauhaus Demi (ITC)"><option value="Bauhaus Bold (ITC)"><option value="Belwe Light"><option value="Belwe Light Italic"><option value="Belwe Medium"><option value="Belwe Bold"><option value="Bodoni Book"><option value="Bodoni Book Italic"><option value="Bodoni"><option value="Bodoni Italic"><option value="Bodoni Bold"></datalist></div>
+
+<div class="fg"><label>Puntaje <span class="req">*</span> <span class="info-btn" onclick="showDialog('fp')">?</span></label>
+<div class="fr">
+<select id="inSize" style="flex:1"><option value="">— Normalizado —</option><option value="6">6 pts</option><option value="7">7 pts</option><option value="8">8 pts</option><option value="9">9 pts</option><option value="10">10 pts</option><option value="11">11 pts</option><option value="12">12 pts</option><option value="14">14 pts</option><option value="18">18 pts</option><option value="24">24 pts</option><option value="custom">Otro valor…</option></select>
+<input type="number" id="inSizeCustom" placeholder="pts" min="1" max="200" step="0.5" style="flex:0 0 70px;display:none">
+</div></div>
+
+<div class="fg"><label>Interlineado (I.) <span class="req">*</span> <span class="info-btn" onclick="showDialog('inter')">?</span></label>
+<div class="fr"><input type="number" id="inLeading" placeholder="ej: 14" min="1" step="0.5"><span class="ut" id="leadUT">pts PostScript</span></div></div>
+
+<div class="fg"><label>Cantidad de Golpes (#G.m.) <span class="req">*</span> <span class="info-btn" onclick="showDialog('golpe')">?</span></label>
+<div class="fr"><input type="number" id="inGolpes" placeholder="ej: 10000" min="1"><span class="ut">caracteres</span></div></div>
+
+<div class="fg"><label>Ancho de Columnaje (Ø) <span class="req">*</span> <span class="info-btn" onclick="showDialog('ancho')">?</span></label>
+<div class="fr"><input type="text" id="inColWidth" placeholder="ej: 24p o 24c" style="font-family:var(--fm)"><span class="ut" id="colUT">picas</span></div>
+<div id="duoNote" style="font-size:.6rem;color:var(--text-muted);margin-top:2px;font-family:var(--fm)">Sistema duodecimal: 1 pica = 12 puntos PostScript · Escribe "p" para picas, "c" para cíceros</div></div>
+
+<div class="fg"><label>Factor Puntaje (F.p.) <span class="info-btn" onclick="showDialog('fp')">?</span></label>
+<div class="fp-mode"><button class="active" data-m="specific" onclick="setFPMode('specific')">F.p. Específico</button><button data-m="general" onclick="setFPMode('general')">F.p. General</button><button data-m="manual" onclick="setFPMode('manual')">Valor manual</button></div>
+<div id="fpSpecific"><input type="number" id="fpSpecVal" placeholder="Auto al elegir fuente+puntaje" readonly style="background:rgba(232,115,42,.05)"></div>
+<div id="fpGeneral" style="display:none"><input type="number" id="fpGenVal" placeholder="Auto al elegir puntaje" readonly style="background:rgba(232,115,42,.05)"></div>
+<div id="fpManual" style="display:none"><input type="number" id="fpManVal" placeholder="Ingresa valor de F.p." min="0.1" step="0.01"></div>
+</div>
+
+<div class="fg"><label>Unidad de medida tipográfica Punto (pt.)</label>
+<input type="text" id="ptUnit" readonly style="background:rgba(255,255,255,.02)"></div>
+
+<div class="fg"><label>Alto de Caja Tipográfica (A.C.T.) <span class="info-btn" onclick="showDialog('act')">?</span></label>
+<div style="font-size:.62rem;color:var(--text-muted);margin-bottom:6px;font-family:var(--fm)">Altura de la mancha de impresión. Obtenida en InDesign: Altura de página − (margen sup. + margen inf.)</div>
+<div style="display:flex;gap:4px;margin-bottom:6px;flex-wrap:wrap">
+<button type="button" class="act-preset" onclick="setACT('revista')" style="font-family:var(--fm);font-size:.6rem;padding:4px 10px;border:1px solid var(--glass-border);background:var(--glass);color:var(--text-secondary);border-radius:100px;cursor:pointer;transition:var(--tr)">Revista/Periódico</button>
+<button type="button" class="act-preset" onclick="setACT('libro')" style="font-family:var(--fm);font-size:.6rem;padding:4px 10px;border:1px solid var(--glass-border);background:var(--glass);color:var(--text-secondary);border-radius:100px;cursor:pointer;transition:var(--tr)">Libro estándar</button>
+<button type="button" class="act-preset" onclick="setACT('custom')" style="font-family:var(--fm);font-size:.6rem;padding:4px 10px;border:1px solid var(--glass-border);background:var(--glass);color:var(--text-secondary);border-radius:100px;cursor:pointer;transition:var(--tr)">Valor personalizado</button>
+</div>
+<div class="fr"><input type="number" id="inBoxH" placeholder="Opcional: ingresa o selecciona arriba" min="0.1" step="0.1"><span class="ut">cm</span></div>
+<div id="actNote" style="font-size:.58rem;color:var(--teal);margin-top:2px;font-family:var(--fm);display:none"></div></div>
+
+<button class="btn-calc" onclick="calculate()" style="margin-top:12px">Calcular Extensión de Texto</button>
+</div>
+
+<!-- REAL-TIME RESULTS + COLUMN -->
+<div class="rv">
+<div class="rv-header"><h3 style="font-size:.95rem">Visualización de Columna</h3><span class="ut" id="colUnitName" style="font-size:.7rem">picas</span></div>
+
+<!-- Ruler showing characters per line -->
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+<span style="font-family:var(--fm);font-size:.6rem;color:var(--text-muted)">Caracteres →</span>
+<div style="flex:1;position:relative"><div class="ruler" id="dRuler" style="height:24px;border-bottom:2px solid var(--orange);background:repeating-linear-gradient(90deg,rgba(232,115,42,.4) 0px,rgba(232,115,42,.4) 1px,transparent 1px,transparent var(--tick,30px))"></div></div>
+<span style="font-family:var(--fm);font-size:.6rem;color:var(--text-muted)" id="rulerTotal"></span>
+</div>
+
+<!-- Column box -->
+<div class="col-box" id="colBox">
+<div class="col-w-bracket"><span class="col-w-label" id="colWLabel">Ø = 24 picas</span></div>
+<div class="col-h-bracket"><span class="col-h-label" id="colHLabel">A.T.C.</span></div>
+<span class="col-golpe-badge" id="golpeBadge" style="right:16px"># Golpes: 0</span>
+<span class="col-golpe-badge" id="ccplBadge" style="left:48px;right:auto;background:var(--teal);top:10px">C.c.p.l.: —</span>
+<div class="col-ln" id="colLN" style="left:6px;top:36px;width:34px"></div>
+<div class="col-text" id="colText" lang="es"><span style="color:var(--text-muted);font-size:.82rem">Los resultados se mostrarán aquí en tiempo real al calcular...</span></div>
+
+<!-- Visible hotspots - BELOW the box, clearly readable -->
+<div class="hs-out" style="bottom:-22px;left:10px" data-tag="Medida vertical" data-title="Interlineado (I.)" data-desc="Distancia entre líneas base consecutivas en puntos tipográficos." data-color="var(--teal)"><div class="hd" style="background:var(--teal)"></div><span class="hl-text">Interlineado</span></div>
+<div class="hs-out" style="bottom:-22px;left:50%;transform:translateX(-50%)" data-tag="Conteo" data-title="Golpes (#G.m.)" data-desc="Cada carácter tipográfico (letra, espacio, signo) = 1 golpe." data-color="var(--orange)"><div class="hd" style="background:var(--orange)"></div><span class="hl-text"># Golpes</span></div>
+<div class="hs-out" style="bottom:-22px;right:10px" data-tag="Medida horizontal" data-title="Ancho de Columna (Ø)" data-desc="Medida en picas o cíceros. Unidad duodecimal: 1 pica/cícero = 12 puntos." data-color="var(--teal)"><div class="hd" style="background:var(--teal)"></div><span class="hl-text">Ancho (Ø)</span></div>
+</div>
+
+<!-- Result chips -->
+<div class="rc">
+<div class="chip"><div class="chip-l">Ancho (Ø)</div><div class="chip-v" id="cvW">—</div><div class="chip-u" id="cuW">picas</div></div>
+<div class="chip"><div class="chip-l">F.p.</div><div class="chip-v" id="cvFP">—</div><div class="chip-u">car/pica</div></div>
+<div class="chip"><div class="chip-l">C.c.p.l.</div><div class="chip-v" id="cvCcpl">—</div><div class="chip-u">car/línea</div></div>
+<div class="chip"><div class="chip-l">Renglones</div><div class="chip-v" id="cvCr">—</div><div class="chip-u">C.r.</div></div>
+<div class="chip"><div class="chip-l">Interlineado</div><div class="chip-v" id="cvI">—</div><div class="chip-u">pts</div></div>
+<div class="chip big"><div class="chip-l">Extensión Total</div><div class="chip-v" id="cvPages">—</div><div class="chip-u">páginas</div><div class="pages-text" id="cvPagesText">Cantidad de páginas</div></div>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ═══ FORMULA WALKTHROUGH ═══ -->
+<section id="formula"><div class="ctr">
+<div class="tag">Narrativa de la Fórmula</div>
+<h2>Cómo funciona el <span class="hl">Cálculo</span> paso a paso</h2>
+<p style="color:var(--text-secondary);max-width:700px;margin-bottom:8px">La fórmula transforma progresivamente las unidades tipográficas hasta obtener la extensión total en páginas.</p>
+<div class="wt">
+<div class="ws"><div class="si">1</div><div class="wc"><div class="wc-h"><h3>Caracteres por Línea <span class="tl">(C.c.p.l.)</span></h3><span class="wfb">Ø × F.p. = C.c.p.l.</span></div><div class="wc-b"><p>Ancho de columna en <span id="ws1u" style="color:var(--orange)">picas</span> × Factor Puntaje = caracteres que caben por <span id="ws1u2" style="color:var(--orange)">pica</span>.</p><div class="eq"><span class="ev" id="eq1a">Ø</span><span class="eo">×</span><span class="ev" id="eq1b">F.p.</span><span class="eo">=</span><span class="ev res" id="eq1r">?</span><span class="el">car/línea</span></div></div></div></div>
+<div class="ws"><div class="si">2</div><div class="wc"><div class="wc-h"><h3>Renglones <span class="tl">(C.r.)</span></h3><span class="wfb">#G.m. ÷ C.c.p.l. = C.r.</span></div><div class="wc-b"><p>Total de golpes ÷ caracteres por línea = renglones totales.</p><div class="eq"><span class="ev" id="eq2a">#G.m.</span><span class="eo">÷</span><span class="ev" id="eq2b">C.c.p.l.</span><span class="eo">=</span><span class="ev res" id="eq2r">?</span><span class="el">renglones</span></div></div></div></div>
+<div class="ws"><div class="si">3</div><div class="wc"><div class="wc-h"><h3>Altura en Puntos <span class="tl">(A.T.C.p.)</span></h3><span class="wfb">C.r. × I. = A.T.C.p.</span></div><div class="wc-b"><p>Renglones × interlineado = altura total en puntos.</p><div class="eq"><span class="ev" id="eq3a">C.r.</span><span class="eo">×</span><span class="ev" id="eq3b">I.</span><span class="eo">=</span><span class="ev res" id="eq3r">?</span><span class="el" id="eq3u">pts</span></div></div></div></div>
+<div class="ws"><div class="si">4</div><div class="wc"><div class="wc-h"><h3>Conversión a mm <span class="tl">(A.T.C.mm.)</span></h3><span class="wfb" id="ws4b">× 0.353 = mm</span></div><div class="wc-b"><p><span id="ws4n" style="color:var(--orange)">1 pt PostScript = 0.353 mm</span></p><div class="eq"><span class="ev" id="eq4a">A.T.C.p.</span><span class="eo">×</span><span class="ev" id="eq4b">0.353</span><span class="eo">=</span><span class="ev res" id="eq4r">?</span><span class="el">mm</span></div></div></div></div>
+<div class="ws"><div class="si">5</div><div class="wc"><div class="wc-h"><h3>Conversión a cm <span class="tl">(A.T.C.cm.)</span></h3><span class="wfb">÷ 10 = cm</span></div><div class="wc-b"><div class="eq"><span class="ev" id="eq5a">mm</span><span class="eo">÷</span><span class="ev">10</span><span class="eo">=</span><span class="ev res" id="eq5r">?</span><span class="el">cm</span></div></div></div></div>
+<div class="ws"><div class="si">6</div><div class="wc"><div class="wc-h"><h3>Extensión <span class="tl">(Páginas)</span></h3><span class="wfb">÷ A.C.T. = págs</span></div><div class="wc-b"><p>Altura total del texto ÷ alto de la caja tipográfica = páginas.</p><div class="eq" style="border-left-color:var(--teal)"><span class="ev" id="eq6a">cm</span><span class="eo">÷</span><span class="ev" id="eq6b">A.C.T.</span><span class="eo">=</span><span class="ev res" id="eq6r" style="font-size:1.2rem">?</span><span class="el" style="font-weight:600;color:var(--teal)">PÁGINAS</span></div></div></div></div>
+</div>
+</div></section>
+
+<!-- ═══ INTERLINEADO INTERACTIVO ═══ -->
+<section id="anatomy"><div class="ctr">
+<div class="tag">Identificación del Tamaño de Letra</div>
+<h2>Interlineado <span class="hl">interactivo</span>: relación con el puntaje</h2>
+<p style="color:var(--text-secondary);max-width:750px;margin-bottom:16px">La <strong style="color:var(--cream)">línea base</strong> es donde se apoyan las letras. El <strong style="color:var(--cream)">interlineado</strong> es la distancia entre líneas base consecutivas. Ajusta los controles para explorar visualmente cómo el puntaje y el interlineado determinan la altura total de la columna.</p>
+
+<!-- Interactive Interlineado Viewer -->
+<div class="reveal">
+
+<!-- Controls -->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:16px;margin-bottom:16px">
+<div class="fg"><label style="font-size:.68rem">Tamaño de Cuerpo (pts)</label>
+<div style="display:flex;gap:6px;align-items:center"><input type="number" id="ilFontSize" value="72" min="12" max="200" step="1" oninput="updateILCanvas()"><span class="ut" id="ilSizeMm">25.4 mm</span></div></div>
+<div class="fg"><label style="font-size:.68rem">Interlineado (factor)</label>
+<input type="range" id="ilFactor2" min="0.8" max="3" step="0.05" value="1.2" oninput="updateILCanvas()" style="-webkit-appearance:none;height:5px;background:rgba(255,255,255,.1);border:none;border-radius:3px;cursor:pointer;padding:0">
+<div style="display:flex;justify-content:space-between;font-family:var(--fm);font-size:.65rem;color:var(--text-muted);margin-top:2px"><span id="ilFactorVal">1.20 (120%)</span><span id="ilLeadPt">86.4 pts</span></div></div>
+<div class="fg"><label style="font-size:.68rem">Texto Línea 1 <span style="color:var(--teal)">(fija)</span></label>
+<input type="text" id="ilText1" value="Tipografía" oninput="updateILCanvas()"></div>
+<div class="fg"><label style="font-size:.68rem">Texto Línea 2 <span style="color:var(--orange)">(móvil)</span></label>
+<input type="text" id="ilText2" value="Editorial" oninput="updateILCanvas()"></div>
+</div>
+
+<!-- Canvas -->
+<div style="background:#050510;border-radius:var(--r-md);padding:40px 60px;position:relative;min-height:300px;overflow:hidden;border:1px solid var(--glass-border);box-shadow:inset 0 0 40px rgba(0,0,0,.6)" id="ilCanvas">
+<div style="position:absolute;left:60px;top:120px;white-space:nowrap;z-index:20" id="ilLine1Wrap">
+<div id="ilGuides1" style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none"></div>
+<div id="ilLine1" style="font-family:'Times New Roman',Times,serif;font-size:72pt;line-height:1;color:#fff;white-space:nowrap;transform:translateY(-82%)">Tipografía</div>
+</div>
+<div style="position:absolute;left:60px;top:120px;white-space:nowrap;z-index:10;transition:transform .3s" id="ilLine2Wrap">
+<div id="ilGuides2" style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none"></div>
+<div id="ilLine2" style="font-family:'Times New Roman',Times,serif;font-size:72pt;line-height:1;color:rgba(255,255,255,.7);white-space:nowrap;transform:translateY(-82%)">Editorial</div>
+</div>
+</div>
+
+<!-- Legend -->
+<div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:12px;padding:12px;background:rgba(255,255,255,.03);border-radius:var(--r-sm);justify-content:center;font-size:.72rem;color:var(--text-secondary)">
+<span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:2px;background:#ff6b6b;border-radius:1px;display:inline-block"></span>Ascendentes</span>
+<span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:2px;background:#ffd93d;border-radius:1px;display:inline-block"></span>Altura x</span>
+<span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:3px;background:var(--teal);border-radius:1px;display:inline-block"></span>Línea base</span>
+<span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:2px;background:#4d96ff;border-radius:1px;display:inline-block"></span>Descendentes</span>
+<span style="display:flex;align-items:center;gap:4px"><span style="width:18px;height:8px;background:rgba(232,115,42,.2);border:1px solid var(--orange);border-radius:2px;display:inline-block"></span>Entrelínea</span>
+</div>
+
+<!-- Measurement cards -->
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:12px">
+<div style="background:rgba(255,255,255,.03);border-left:3px solid #ff6b6b;border-radius:var(--r-sm);padding:12px">
+<div style="font-size:.62rem;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Ascendentes</div>
+<div style="font-family:var(--fm);font-size:1rem;font-weight:700;color:#fff" id="ilAscVal">—</div>
+<div style="font-family:var(--fm);font-size:.6rem;color:#666;margin-top:2px" id="ilAscSub">—</div>
+</div>
+<div style="background:rgba(255,255,255,.03);border-left:3px solid #ffd93d;border-radius:var(--r-sm);padding:12px">
+<div style="font-size:.62rem;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Altura x</div>
+<div style="font-family:var(--fm);font-size:1rem;font-weight:700;color:#fff" id="ilXhVal">—</div>
+<div style="font-family:var(--fm);font-size:.6rem;color:#666;margin-top:2px" id="ilXhSub">—</div>
+</div>
+<div style="background:rgba(255,255,255,.03);border-left:3px solid var(--teal);border-radius:var(--r-sm);padding:12px">
+<div style="font-size:.62rem;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Línea Base</div>
+<div style="font-family:var(--fm);font-size:1rem;font-weight:700;color:var(--teal)">FIJA</div>
+<div style="font-family:var(--fm);font-size:.6rem;color:#666;margin-top:2px">Referencia del interlineado</div>
+</div>
+<div style="background:rgba(255,255,255,.03);border-left:3px solid #4d96ff;border-radius:var(--r-sm);padding:12px">
+<div style="font-size:.62rem;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Descendentes</div>
+<div style="font-family:var(--fm);font-size:1rem;font-weight:700;color:#fff" id="ilDescVal">—</div>
+<div style="font-family:var(--fm);font-size:.6rem;color:#666;margin-top:2px" id="ilDescSub">—</div>
+</div>
+<div style="background:rgba(255,255,255,.03);border-left:3px solid var(--orange);border-radius:var(--r-sm);padding:12px">
+<div style="font-size:.62rem;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px">Entrelínea total</div>
+<div style="font-family:var(--fm);font-size:1rem;font-weight:700;color:var(--orange)" id="ilLeadVal">—</div>
+<div style="font-family:var(--fm);font-size:.6rem;color:#666;margin-top:2px" id="ilLeadSub">—</div>
+</div>
+</div>
+</div>
+</div></section>
+
+<!-- ═══ FACTOR PUNTAJE ═══ -->
+<section id="fp-section"><div class="ctr">
+<div class="tag">Tabla de Referencia</div>
+<h2>Factor Puntaje <span class="hl">(F.p.)</span></h2>
+<p style="color:var(--text-secondary);max-width:700px;margin-bottom:8px">El Factor Puntaje indica cuántos caracteres caben por pica/cícero. A mayor puntaje → menor F.p. → menos caracteres por línea.</p>
+
+<div style="background:rgba(232,115,42,.05);border:1px solid rgba(232,115,42,.15);border-radius:var(--r-md);padding:16px;margin:16px 0">
+<h3 style="font-size:.9rem;margin-bottom:8px">Cómo se obtiene el F.p.</h3>
+<p style="font-size:.8rem;color:var(--text-secondary);margin-bottom:8px">El F.p. se obtiene empíricamente: se compone un texto en Adobe InDesign con la fuente y puntaje deseados, se cuentan los caracteres y líneas, y se divide:</p>
+<div class="eq" style="margin:8px 0"><span class="ev">caracteres</span><span class="eo">÷</span><span class="ev">líneas</span><span class="eo">=</span><span class="ev">cpl</span><span class="eo">÷</span><span class="ev">Ø picas</span><span class="eo">=</span><span class="ev res">F.p.</span></div>
+<p style="font-size:.75rem;color:var(--text-muted);margin-top:8px"><strong style="color:var(--cream)">Margen de error:</strong> Los valores de la tabla son promedios estadísticos. La variación real depende de la distribución de caracteres en el idioma (frecuencia de letras anchas como "m" vs. estrechas como "i"). Para textos en español, el error típico es ±3–5%. Para mayor precisión, calcule el F.p. específico de su composición real en InDesign usando el calculador siguiente.</p>
+</div>
+
+<h3 style="margin-top:24px">Tabla General (promedios por rango)</h3>
+<div class="fp-gen" id="fpGGrid"></div>
+<h3 style="margin-top:24px">Tabla Específica por Fuente</h3>
+<div class="fptw"><table class="fpt"><thead><tr><th>Modelo de Letra</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>14</th><th>18</th><th>24</th></tr></thead><tbody id="fpTBody"></tbody></table></div>
+
+<!-- FP Calculator -->
+<div class="fpc-box reveal">
+<h4 style="font-family:var(--fd);font-size:.9rem;color:var(--teal);margin-bottom:10px">Calculador de F.p. desde InDesign</h4>
+
+<!-- Visual diagram of InDesign process -->
+<div style="background:rgba(0,0,0,.2);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:16px;margin-bottom:14px">
+<div style="font-family:var(--fd);font-size:.78rem;color:var(--cream);margin-bottom:10px;text-align:center">Procedimiento en Adobe InDesign</div>
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center">
+<div style="background:rgba(232,115,42,.08);border:1px solid rgba(232,115,42,.2);border-radius:var(--r-sm);padding:10px">
+<div style="font-size:1.3rem;margin-bottom:4px">📄</div>
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--orange);font-weight:600">PASO 1</div>
+<div style="font-size:.65rem;color:var(--text-secondary);margin-top:2px">Componer texto con la fuente y puntaje deseados en una columna</div>
+</div>
+<div style="background:rgba(232,115,42,.08);border:1px solid rgba(232,115,42,.2);border-radius:var(--r-sm);padding:10px">
+<div style="font-size:1.3rem;margin-bottom:4px">🔢</div>
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--orange);font-weight:600">PASO 2</div>
+<div style="font-size:.65rem;color:var(--text-secondary);margin-top:2px">Menú <em>Ventana → Info</em>: contar caracteres de la página</div>
+</div>
+<div style="background:rgba(232,115,42,.08);border:1px solid rgba(232,115,42,.2);border-radius:var(--r-sm);padding:10px">
+<div style="font-size:1.3rem;margin-bottom:4px">📏</div>
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--orange);font-weight:600">PASO 3</div>
+<div style="font-size:.65rem;color:var(--text-secondary);margin-top:2px">Contar la cantidad de líneas visibles en el marco de texto</div>
+</div>
+<div style="background:rgba(43,181,160,.08);border:1px solid rgba(43,181,160,.2);border-radius:var(--r-sm);padding:10px">
+<div style="font-size:1.3rem;margin-bottom:4px">✅</div>
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--teal);font-weight:600">RESULTADO</div>
+<div style="font-size:.65rem;color:var(--text-secondary);margin-top:2px">F.p. = (caracteres ÷ líneas) ÷ ancho en picas</div>
+</div>
+</div>
+</div>
+
+<p style="font-size:.78rem;color:var(--text-secondary);margin-bottom:10px">Ingresa los datos medidos en tu composición real:</p>
+<div class="fpc-grid">
+<div class="fg"><label>Caracteres en página</label><input type="number" id="fpcChars" placeholder="ej: 2500"></div>
+<div class="fg"><label>Líneas en página</label><input type="number" id="fpcLines" placeholder="ej: 50"></div>
+<div class="fg"><label>Ancho columna (picas)</label><input type="number" id="fpcColW" placeholder="ej: 24"></div>
+</div>
+<button class="btn-p" onclick="calcFPCustom()" style="margin-top:10px;padding:8px 16px;font-size:.8rem">Calcular F.p.</button>
+<div id="fpcResult" style="display:none;text-align:center;background:rgba(43,181,160,.1);border-radius:var(--r-sm);padding:12px;margin-top:10px">
+<div style="font-size:.68rem;color:var(--text-muted);font-family:var(--fm)">Car/línea: <span id="fpcCpl">—</span></div>
+<div style="font-family:var(--fd);font-size:1.6rem;font-weight:800;color:var(--teal)" id="fpcFpVal">—</div>
+<div style="font-size:.65rem;color:var(--text-secondary)">caracteres por pica</div>
+<button class="btn-o" onclick="useFPCalc()" style="margin-top:6px;padding:5px 12px;font-size:.7rem">Usar en calculadora ↑</button>
+</div>
+</div>
+</div></section>
+
+<!-- ═══ SUBMISSION ═══ -->
+<section id="sub"><div class="ctr">
+<div class="tag">Envío de Resultados</div>
+<h2>Enviar <span class="hl">Cálculo</span></h2>
+<div class="form-c gc">
+<div class="fg"><label>Nombres y Apellidos <span class="req">*</span></label><input type="text" id="fName" placeholder="Nombre completo"><div class="error-msg" id="eName">Obligatorio</div></div>
+<div class="fr"><div class="fg"><label>Correo <span class="req">*</span></label><input type="email" id="fEmail" placeholder="correo@ejemplo.com"><div class="error-msg" id="eEmail">Correo válido</div></div><div class="fg"><label>Sección <span class="req">*</span></label><input type="text" id="fSec" placeholder="35817"><div class="error-msg" id="eSec">Obligatorio</div></div></div>
+<div class="fg"><label>Observaciones</label><textarea id="fNotes" rows="3" placeholder="Notas..."></textarea></div>
+<div class="fa">
+<button class="btn btn-p" onclick="submitForm()">Enviar por Correo</button>
+<button class="btn btn-s" onclick="printPDF()">Imprimir PDF</button>
+<button class="btn btn-o" onclick="resetAll()">Limpiar</button>
+</div>
+</div>
+</div></section>
+
+<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño Editorial</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 2</span><br><span style="font-size:.68rem"></span></div></footer>
+
+<script>
+// ═══ Interactive Interlineado Canvas ═══
+const ilMetrics={upm:1000,asc:683,xh:450,desc:217,get ar(){return this.asc/this.upm},get xr(){return this.xh/this.upm},get dr(){return this.desc/this.upm}};
+const PX=96/72;
+function updateILCanvas(){
+ const pts=parseFloat(document.getElementById('ilFontSize').value)||72;
+ const fac=parseFloat(document.getElementById('ilFactor2').value)||1.2;
+ const leadPt=pts*fac;
+ const s=SYS[csys];
+ // Update displays
+ document.getElementById('ilFactorVal').textContent=fac.toFixed(2)+' ('+(fac*100).toFixed(0)+'%)';
+ document.getElementById('ilLeadPt').textContent=leadPt.toFixed(1)+' pts';
+ document.getElementById('ilSizeMm').textContent=(pts*s.pt).toFixed(1)+' mm';
+ // Text
+ const t1=document.getElementById('ilText1').value||'Tipografía';
+ const t2=document.getElementById('ilText2').value||'Editorial';
+ document.getElementById('ilLine1').textContent=t1;
+ document.getElementById('ilLine2').textContent=t2;
+ // Pixel calcs
+ const fsPx=pts*PX,ascPx=fsPx*ilMetrics.ar,xhPx=fsPx*ilMetrics.xr,descPx=fsPx*ilMetrics.dr,leadPx=leadPt*PX;
+ // Apply sizes
+ document.getElementById('ilLine1').style.fontSize=pts+'pt';
+ document.getElementById('ilLine2').style.fontSize=pts+'pt';
+ document.getElementById('ilLine2Wrap').style.transform='translateY('+leadPx+'px)';
+ // Draw guidelines
+ const g1=document.getElementById('ilGuides1'),g2=document.getElementById('ilGuides2');
+ g1.innerHTML='';g2.innerHTML='';
+ function drawG(g,isFixed){
+   g.innerHTML+=gl(-ascPx,'#ff6b6b','Asc '+(ascPx/PX).toFixed(1)+'pt');
+   g.innerHTML+=gl(-(ascPx-xhPx),'#ffd93d','x-h '+(xhPx/PX).toFixed(1)+'pt');
+   g.innerHTML+=gl(0,'var(--teal)',isFixed?'BASE FIJA':'BASE MÓVIL',true);
+   g.innerHTML+=gl(descPx,'#4d96ff','Desc '+(descPx/PX).toFixed(1)+'pt');
+   if(isFixed){
+     const h=leadPx-descPx;
+     g.innerHTML+=`<div style="position:absolute;top:${descPx}px;left:-40px;width:calc(100% + 60px);height:${h}px;background:rgba(232,115,42,.08);border-left:2px solid var(--orange);border-right:2px solid var(--orange);display:flex;align-items:center;justify-content:flex-end;padding-right:6px;z-index:1"><span style="font-family:var(--fm);font-size:.55rem;font-weight:700;color:var(--orange);background:rgba(232,115,42,.2);padding:2px 6px;border-radius:3px">ENTRELÍNEA: ${leadPt.toFixed(1)}pt | ${(leadPt/12).toFixed(2)}${s.u.slice(0,-1)}</span></div>`;
+   }
+ }
+ function gl(top,color,label,isBold){
+   return `<div style="position:absolute;top:${top}px;left:-40px;width:calc(100% + 60px);height:${isBold?2:1}px;background:${color};opacity:.7;${isBold?'box-shadow:0 0 6px '+color:''}"><span style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:var(--fm);font-size:.5rem;font-weight:600;color:${color};background:rgba(0,0,0,.8);padding:1px 4px;border-radius:2px;white-space:nowrap">${label}</span></div>`;
+ }
+ drawG(g1,true);drawG(g2,false);
+ // Measurement cards
+ const ascPt=pts*ilMetrics.ar,xhPt=pts*ilMetrics.xr,descPt=pts*ilMetrics.dr;
+ document.getElementById('ilAscVal').textContent=ascPt.toFixed(1)+' pt';
+ document.getElementById('ilAscSub').textContent=(ascPt*s.pt).toFixed(2)+' mm';
+ document.getElementById('ilXhVal').textContent=xhPt.toFixed(1)+' pt';
+ document.getElementById('ilXhSub').textContent=(xhPt*s.pt).toFixed(2)+' mm';
+ document.getElementById('ilDescVal').textContent=descPt.toFixed(1)+' pt';
+ document.getElementById('ilDescSub').textContent=(descPt*s.pt).toFixed(2)+' mm';
+ document.getElementById('ilLeadVal').textContent=leadPt.toFixed(1)+' pt';
+ document.getElementById('ilLeadSub').textContent=(leadPt*s.pt).toFixed(2)+' mm | '+(leadPt/12).toFixed(2)+' '+s.u;
+}
+setTimeout(updateILCanvas,100);
+
+const SYS={a:{name:'Anglosajón (PostScript)',pt:0.353,u:'picas',un:'pica'},f:{name:'Francés (Didot)',pt:0.376,u:'cíceros',un:'cícero'}};
+const FPG=[{r:'6–8',v:3.3},{r:'9–10',v:2.9},{r:'11–12',v:2.5},{r:'13–14',v:2.0},{r:'15–16',v:1.5},{r:'17–18',v:1.0},{r:'20–21',v:0.9},{r:'23–24',v:0.8}];
+const FPS=[6,7,8,9,10,11,12,14,18,24];
+const FPD={
+'Baskerville':[4.62,3.97,3.47,3.09,2.78,2.52,2.31,1.98,1.54,1.16],
+'Baskerville italic':[5.48,4.70,4.12,3.66,3.29,2.99,2.74,2.35,1.83,1.37],
+'Baskerville Bold':[4.31,3.69,3.23,2.87,2.59,2.35,2.16,1.85,1.44,1.00],
+'Baskerville Bold Italic':[4.86,4.17,3.65,3.24,2.92,2.65,2.43,2.09,1.62,1.22],
+'Bauhaus Light (ITC)':[4.72,4.04,3.54,3.14,2.83,2.57,2.36,2.02,1.57,1.18],
+'Bauhaus Medium (ITC)':[4.52,3.86,3.39,3.00,2.70,2.46,2.26,1.93,1.50,1.13],
+'Bauhaus Demi (ITC)':[4.44,3.80,3.33,2.96,2.66,2.42,2.22,1.90,1.48,1.07],
+'Bauhaus Bold (ITC)':[4.28,3.66,3.20,2.85,2.56,2.33,2.14,1.83,1.43,1.16],
+'Belwe Light':[4.62,3.96,3.47,3.08,2.77,2.52,2.31,1.98,1.54,1.19],
+'Belwe Light Italic':[4.77,4.09,3.58,3.18,2.86,2.60,2.39,2.05,1.59,1.19],
+'Belwe Medium':[4.30,3.69,3.23,2.87,2.58,2.35,2.15,1.84,1.43,1.08],
+'Belwe Bold':[4.08,3.48,3.05,2.70,2.44,2.23,2.04,1.74,1.36,1.02],
+'Bodoni Book':[4.84,4.16,3.63,3.23,2.91,2.64,2.42,2.07,1.61,1.21],
+'Bodoni Book Italic':[4.84,4.16,3.63,3.23,2.91,2.64,2.42,2.07,1.61,1.21],
+'Bodoni':[4.52,3.88,3.40,3.02,2.71,2.16,2.26,1.93,1.50,1.12],
+'Bodoni Italic':[4.52,3.88,3.40,3.02,2.71,2.16,2.26,1.93,1.50,1.12],
+'Bodoni Bold':[4.13,3.54,3.10,2.75,2.48,2.25,2.06,1.77,1.37,1.02]
+};
+const LOR='En el vasto campo del diseño editorial, la tipografía desempeña un papel fundamental como vehículo de comunicación visual. Cada decisión sobre el tipo de letra, el puntaje, el interlineado y el ancho de columna afecta directamente la experiencia de lectura y la composición armónica de la página. Los diseñadores deben considerar cuidadosamente la relación entre la mancha tipográfica y los márgenes para lograr una composición equilibrada. La legibilidad depende no solo del tamaño del carácter, sino también del espacio entre letras, palabras y líneas del texto compuesto. Un texto bien compuesto invita al lector a sumergirse en el contenido sin esfuerzo alguno. El cálculo preciso de la extensión del texto permite planificar la distribución del contenido en las páginas disponibles.';
+let csys='a',CR=null,fpMode='specific';
+
+document.addEventListener('DOMContentLoaded',()=>{bFPG();bFPT();bRuler();initObs();initTips();uUI();
+ document.getElementById('inSize').addEventListener('change',function(){
+   const cv=this.value;
+   document.getElementById('inSizeCustom').style.display=cv==='custom'?'':'none';
+   if(cv!=='custom')autoFP();
+   syncCalcToIL();
+ });
+ document.getElementById('inSizeCustom').addEventListener('input',function(){autoFP();syncCalcToIL()});
+ document.getElementById('inColWidth').addEventListener('input',function(){parseColWidth();bRuler()});
+ document.getElementById('inLeading').addEventListener('input',syncCalcToIL);
+});
+
+function syncCalcToIL(){
+ const sz=parseInt(getSize())||0,lead=parseFloat(document.getElementById('inLeading').value)||0;
+ if(sz>0){document.getElementById('ilFontSize').value=sz}
+ if(sz>0&&lead>0){document.getElementById('ilFactor2').value=(lead/sz).toFixed(2)}
+ updateILCanvas();
+}
+
+function getSize(){
+ const sel=document.getElementById('inSize').value;
+ if(sel==='custom')return document.getElementById('inSizeCustom').value||'';
+ return sel;
+}
+
+function parseColWidth(){
+ const raw=document.getElementById('inColWidth').value.trim();
+ const s=SYS[csys];
+ // Detect suffix: p=picas, c=cíceros
+ if(raw.endsWith('p')){csys='a';document.querySelectorAll('.sc').forEach(c=>c.classList.toggle('active',c.dataset.s==='a'));uUI()}
+ else if(raw.endsWith('c')){csys='f';document.querySelectorAll('.sc').forEach(c=>c.classList.toggle('active',c.dataset.s==='f'));uUI()}
+ return parseFloat(raw)||0;
+}
+
+function setACT(type){
+ const el=document.getElementById('inBoxH'),note=document.getElementById('actNote');
+ document.querySelectorAll('.act-preset').forEach(b=>b.style.borderColor='var(--glass-border)');
+ if(type==='revista'){el.value='24';note.textContent='Revista/Periódico estándar: ~24 cm (formato tabloide) o ~35 cm (formato sábana)';note.style.display='block';event.target.style.borderColor='var(--orange)'}
+ else if(type==='libro'){el.value='19';note.textContent='Libro estándar: ~19 cm (formato 14×21 cm con márgenes de 2 cm)';note.style.display='block';event.target.style.borderColor='var(--orange)'}
+ else{el.value='';el.focus();note.style.display='none';event.target.style.borderColor='var(--orange)'}
+}
+
+function selSys(s){csys=s;document.querySelectorAll('.sc').forEach(c=>c.classList.toggle('active',c.dataset.s===s));uUI()}
+
+function uUI(){
+ const s=SYS[csys],a=csys==='a';
+ document.getElementById('colUT').textContent=s.u;
+ document.getElementById('leadUT').textContent='pts '+(a?'PostScript':'Didot');
+ document.getElementById('ptUnit').value=s.pt+' mm ('+(a?'PostScript':'Didot')+')';
+ document.getElementById('ws1u').textContent=s.u;document.getElementById('ws1u2').textContent=s.un;
+ document.getElementById('ws4b').textContent='A.T.C.p. × '+s.pt+' = mm';
+ document.getElementById('ws4n').textContent=a?'Sistema anglosajón: 1 pt PostScript = 0.353 mm':'Sistema francés: 1 pt Didot = 0.376 mm';
+ document.getElementById('eq4b').textContent=s.pt;
+ document.getElementById('eq3u').textContent='pts '+(a?'PostScript':'Didot');
+ document.getElementById('colUnitName').textContent=s.u;
+ document.getElementById('duoNote').textContent='Sistema duodecimal: 1 '+s.un+' = 12 puntos '+(a?'PostScript':'Didot');
+ bRuler();
+}
+
+function showDialog(id){document.getElementById('dlg-'+id).classList.add('show')}
+function hideDialog(id){document.getElementById('dlg-'+id).classList.remove('show')}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.dialog-overlay').forEach(d=>d.classList.remove('show'))});
+
+function setFPMode(m){fpMode=m;document.querySelectorAll('.fp-mode button').forEach(b=>b.classList.toggle('active',b.dataset.m===m));
+ document.getElementById('fpSpecific').style.display=m==='specific'?'':'none';
+ document.getElementById('fpGeneral').style.display=m==='general'?'':'none';
+ document.getElementById('fpManual').style.display=m==='manual'?'':'none';
+}
+
+function autoFP(){
+ const f=document.getElementById('inFont').value,s=getSize();
+ if(fpMode==='specific'){const v=getFP(f,s);if(v)document.getElementById('fpSpecVal').value=v.toFixed(2)}
+ else if(fpMode==='general'){const n=parseInt(s);if(n){let v=0.8;if(n<=8)v=3.3;else if(n<=10)v=2.9;else if(n<=12)v=2.5;else if(n<=14)v=2.0;else if(n<=16)v=1.5;else if(n<=18)v=1.0;else if(n<=21)v=0.9;document.getElementById('fpGenVal').value=v.toFixed(1)}}
+}
+
+function getFP(f,s){const v=FPD[f];if(!v)return null;const i=FPS.indexOf(parseInt(s));return i===-1?null:v[i]}
+
+function getActiveFP(){
+ if(fpMode==='specific')return parseFloat(document.getElementById('fpSpecVal').value)||null;
+ if(fpMode==='general')return parseFloat(document.getElementById('fpGenVal').value)||null;
+ return parseFloat(document.getElementById('fpManVal').value)||null;
+}
+
+function bRuler(){
+ const ruler=document.getElementById('dRuler'),cw=parseColWidth()||24;
+ const s=SYS[csys];
+ if(!ruler||!ruler.parentElement)return;
+ const pw=ruler.parentElement.offsetWidth||500;
+ // Show character positions based on ccpl if calculated, otherwise pica marks
+ const ccpl=CR?CR.ccpl:cw*2.5;
+ const charCount=Math.floor(ccpl);
+ const tickPx=pw/charCount;
+ ruler.style.setProperty('--tick',Math.max(tickPx,3)+'px');
+ ruler.innerHTML='';
+ // Show marks every 5 or 10 characters
+ const step=charCount<=30?5:charCount<=60?10:20;
+ for(let i=0;i<=charCount;i+=step){
+   const p=(i/charCount)*100;
+   ruler.innerHTML+=`<span class="tick-label" style="left:${p}%;font-size:.55rem">${i}</span>`;
+   if(i>0&&i<charCount)ruler.innerHTML+=`<div style="position:absolute;top:0;left:${p}%;width:1px;height:100%;background:var(--orange);opacity:.3"></div>`;
+ }
+ const rt=document.getElementById('rulerTotal');
+ if(rt)rt.textContent=charCount+' car';
+}
+
+function renderCol(r){
+ const ct=document.getElementById('colText'),ln=document.getElementById('colLN'),gb=document.getElementById('golpeBadge'),cb=document.getElementById('ccplBadge');
+ const wl=document.getElementById('colWLabel'),hl=document.getElementById('colHLabel');
+ if(!r){ct.innerHTML='<span style="color:var(--text-muted);font-size:.82rem">Los resultados se mostrarán aquí en tiempo real al calcular...</span>';ln.innerHTML='';gb.textContent='# Golpes: 0';cb.textContent='C.c.p.l.: —';bRuler();return}
+ const ccf=Math.floor(r.ccpl),maxLines=50,lc=Math.min(Math.ceil(r.cr),maxLines);
+ const fs=Math.max(9,Math.min(parseInt(r.size)||10,14));
+ const lh=(r.leading/(parseInt(r.size)||10));
+ let t=LOR;while(t.length<r.golpes)t+=' '+LOR;t=t.substring(0,r.golpes);
+ let h='',n='',p=0;
+ for(let i=0;i<lc&&p<t.length;i++){
+   const c=t.substring(p,p+ccf);
+   h+=`<div style="border-bottom:1px solid rgba(232,115,42,.06);white-space:nowrap;overflow:hidden">${c}</div>`;
+   n+=`<div style="height:${lh}em;line-height:${lh};display:flex;align-items:center;justify-content:flex-end">${i+1}</div>`;
+   p+=ccf;
+ }
+ const remaining=Math.ceil(r.cr)-lc;
+ if(remaining>0){
+   h+=`<div style="color:var(--text-muted);font-style:italic;padding:8px 0;text-align:center;font-family:var(--fm);font-size:.7rem;border-top:2px dashed rgba(232,115,42,.2);margin-top:4px">… ${remaining} renglones más …</div>`;
+   n+=`<div style="height:auto;padding:8px 0;font-style:italic;color:var(--text-muted);font-size:.5rem;text-align:right">…</div>`;
+ }
+ ct.style.fontSize=fs+'px';ct.style.lineHeight=lh;ct.innerHTML=h;
+ ln.style.fontSize=fs+'px';ln.style.lineHeight=lh;ln.innerHTML=n;
+ gb.textContent='# Golpes: '+r.golpes.toLocaleString();
+ cb.textContent='C.c.p.l.: '+ccf+' car/línea';
+ wl.textContent='Ø = '+r.colWidth+' '+SYS[csys].u;
+ hl.textContent=r.atccm.toFixed(1)+' cm';
+
+ // Update chips
+ document.getElementById('cvW').textContent=r.colWidth;document.getElementById('cuW').textContent=SYS[csys].u;
+ document.getElementById('cvFP').textContent=r.fp.toFixed(2);
+ document.getElementById('cvCcpl').textContent=r.ccpl.toFixed(1);
+ document.getElementById('cvCr').textContent=Math.ceil(r.cr);
+ document.getElementById('cvI').textContent=r.leading;
+ if(r.pages>0){
+   document.getElementById('cvPages').textContent=r.pages.toFixed(4);
+   const full=Math.floor(r.pages),frac=r.pages-full;
+   document.getElementById('cvPagesText').textContent='Cantidad de páginas: '+Math.ceil(r.pages)+' página'+(Math.ceil(r.pages)!==1?'s':'')+' ('+full+' completa'+(full!==1?'s':'')+' + '+(frac*100).toFixed(1)+'%)';
+ } else {
+   document.getElementById('cvPages').textContent='—';
+   document.getElementById('cvPagesText').textContent='Ingresa A.C.T. (tipo de publicación) para calcular cantidad de páginas';
+ }
+ document.querySelectorAll('.chip').forEach((c,i)=>{c.classList.remove('active');setTimeout(()=>c.classList.add('active'),150*i);setTimeout(()=>{if(!c.classList.contains('big'))c.classList.remove('active')},150*i+2000)});
+ bRuler();
+}
+
+function bFPG(){document.getElementById('fpGGrid').innerHTML=FPG.map(f=>`<div class="fpg" data-v="${f.v}"><div class="fr">${f.r} pts</div><div class="fv">${f.v}</div></div>`).join('');
+ document.querySelectorAll('.fpg').forEach(c=>c.addEventListener('click',function(){this.classList.toggle('active')}))}
+function bFPT(){document.getElementById('fpTBody').innerHTML=Object.entries(FPD).map(([f,v])=>`<tr><td>${f}</td>${v.map(x=>`<td>${x.toFixed(2)}</td>`).join('')}</tr>`).join('')}
+function hlFP(f,s){document.querySelectorAll('.fpt td.ac').forEach(t=>t.classList.remove('ac'));if(!f||!s)return;const i=FPS.indexOf(parseInt(s));if(i===-1)return;document.querySelectorAll('#fpTBody tr').forEach(r=>{if(r.cells[0].textContent.trim()===f)r.cells[i+1]?.classList.add('ac')})}
+
+function calcFPCustom(){
+ const ch=parseInt(document.getElementById('fpcChars').value),li=parseInt(document.getElementById('fpcLines').value),cw=parseFloat(document.getElementById('fpcColW').value);
+ if(!ch||!li||!cw){alert('Completa los tres campos.');return}
+ const cpl=ch/li,fp=cpl/cw;
+ document.getElementById('fpcCpl').textContent=cpl.toFixed(2);
+ document.getElementById('fpcFpVal').textContent=fp.toFixed(2);
+ document.getElementById('fpcResult').style.display='block';
+}
+function useFPCalc(){
+ const v=document.getElementById('fpcFpVal').textContent;
+ if(v&&v!=='—'){setFPMode('manual');document.getElementById('fpManVal').value=v}
+ document.getElementById('calc').scrollIntoView({behavior:'smooth'});
+}
+
+function calculate(){
+ const font=document.getElementById('inFont').value,size=getSize(),
+   cw=parseColWidth(),golpes=parseInt(document.getElementById('inGolpes').value),
+   lead=parseFloat(document.getElementById('inLeading').value),bh=parseFloat(document.getElementById('inBoxH').value);
+ let ok=true;
+ if(!cw||cw<=0){document.getElementById('inColWidth').classList.add('error');ok=false}else document.getElementById('inColWidth').classList.remove('error');
+ if(!golpes||golpes<=0){document.getElementById('inGolpes').classList.add('error');ok=false}else document.getElementById('inGolpes').classList.remove('error');
+ if(!lead||lead<=0){document.getElementById('inLeading').classList.add('error');ok=false}else document.getElementById('inLeading').classList.remove('error');
+ const fp=getActiveFP();
+ if(!fp){alert('Configura el Factor Puntaje (específico, general o manual).');return}
+ if(!ok)return;
+ const s=SYS[csys],ccpl=cw*fp,cr=golpes/ccpl,atcp=cr*lead,atcmm=atcp*s.pt,atccm=atcmm/10;
+ let pages=0;
+ if(bh&&bh>0)pages=atccm/bh;
+ CR={font,size,colWidth:cw,golpes,leading:lead,boxHeight:bh||0,fp,ccpl,cr,atcp,atcmm,atccm,pages,system:csys};
+
+ // Update equations
+ document.getElementById('eq1a').textContent=cw;document.getElementById('eq1b').textContent=fp.toFixed(2);document.getElementById('eq1r').textContent=ccpl.toFixed(2);
+ document.getElementById('eq2a').textContent=golpes.toLocaleString();document.getElementById('eq2b').textContent=ccpl.toFixed(2);document.getElementById('eq2r').textContent=cr.toFixed(2);
+ document.getElementById('eq3a').textContent=cr.toFixed(2);document.getElementById('eq3b').textContent=lead;document.getElementById('eq3r').textContent=atcp.toFixed(2);
+ document.getElementById('eq4a').textContent=atcp.toFixed(2);document.getElementById('eq4r').textContent=atcmm.toFixed(2);
+ document.getElementById('eq5a').textContent=atcmm.toFixed(2);document.getElementById('eq5r').textContent=atccm.toFixed(2);
+ if(bh&&bh>0){document.getElementById('eq6a').textContent=atccm.toFixed(2);document.getElementById('eq6b').textContent=bh;document.getElementById('eq6r').textContent=pages.toFixed(4)}
+ else{document.getElementById('eq6r').textContent='Falta A.C.T.'}
+ document.querySelectorAll('.ws').forEach((ws,i)=>setTimeout(()=>ws.classList.add('done'),150*i));
+
+ bRuler();renderCol(CR);hlFP(font,size);
+ // Sync interlineado viewer with calculator values
+ if(size){document.getElementById('ilFontSize').value=parseInt(size)||72}
+ if(lead){const sz=parseInt(size)||72;document.getElementById('ilFactor2').value=(lead/sz).toFixed(2)}
+ updateILCanvas();
+ document.getElementById('colBox').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function submitForm(){
+ const nm=document.getElementById('fName').value.trim(),em=document.getElementById('fEmail').value.trim(),sc=document.getElementById('fSec').value.trim(),nt=document.getElementById('fNotes').value.trim();
+ let ok=true;
+ [{i:'fName',e:'eName',c:v=>!!v},{i:'fEmail',e:'eEmail',c:v=>v&&v.includes('@')},{i:'fSec',e:'eSec',c:v=>!!v}].forEach(f=>{const el=document.getElementById(f.i),v=f.c(el.value.trim());document.getElementById(f.e).classList.toggle('show',!v);el.classList.toggle('error',!v);if(!v)ok=false});
+ if(!ok)return;if(!CR){alert('Primero realiza un cálculo.');return}
+ const r=CR,s=SYS[r.system];
+ const sub=encodeURIComponent('Cálculo de Texto - '+nm+' - Sección '+sc);
+ const bd=encodeURIComponent(`CÁLCULO DE TEXTO TIPOGRÁFICO
+==============================
+Estudiante: ${nm}
+Sección: ${sc}
+Observaciones: ${nt||'N/A'}
+
+DATOS DE ENTRADA
+- Sistema: ${s.name}
+- Tipo de Letra: ${r.font||'Manual'}
+- Puntaje: ${r.size||'—'} pts
+- Interlineado (I.): ${r.leading} pts
+- Golpes (#G.m.): ${r.golpes.toLocaleString()}
+- Ancho Columnaje (Ø): ${r.colWidth} ${s.u}
+- Factor Puntaje (F.p.): ${r.fp.toFixed(2)}
+- Punto (pt.): ${s.pt} mm
+- Alto caja: ${r.boxHeight} cm
+
+RESULTADOS
+1. C.c.p.l. = ${r.colWidth} × ${r.fp.toFixed(2)} = ${r.ccpl.toFixed(2)}
+2. C.r. = ${r.golpes.toLocaleString()} ÷ ${r.ccpl.toFixed(2)} = ${r.cr.toFixed(2)}
+3. A.T.C.p. = ${r.cr.toFixed(2)} × ${r.leading} = ${r.atcp.toFixed(2)} pts
+4. A.T.C.mm. = ${r.atcp.toFixed(2)} × ${s.pt} = ${r.atcmm.toFixed(2)} mm
+5. A.T.C.cm. = ${r.atcmm.toFixed(2)} ÷ 10 = ${r.atccm.toFixed(2)} cm
+6. Extensión = ${r.atccm.toFixed(2)} ÷ ${r.boxHeight} = ${r.pages.toFixed(4)} páginas
+
+RESULTADO: ${r.pages.toFixed(4)} páginas (${Math.ceil(r.pages)} págs)
+---
+Diseño de Información · Semana 2 · Mg. Mario Quiroz · d3magindesign`);
+ window.location.href='mailto:'+em+'?cc=c12139@utp.edu.pe&subject='+sub+'&body='+bd;
+}
+function printPDF(){if(!CR){alert('Primero realiza un cálculo.');return}window.print()}
+function resetAll(){
+ document.querySelectorAll('input,select,textarea').forEach(el=>{if(el.type==='select-one')el.selectedIndex=0;else if(!el.readOnly)el.value='';el.classList.remove('error')});
+ document.querySelectorAll('.error-msg').forEach(e=>e.classList.remove('show'));
+ CR=null;document.querySelectorAll('.ws').forEach(ws=>ws.classList.remove('done'));
+ document.querySelectorAll('.fpt td.ac').forEach(t=>t.classList.remove('ac'));
+ document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+ renderCol(null);bRuler();uUI();
+}
+
+function initObs(){
+ const obs=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('visible')}),{threshold:0.01,rootMargin:'0px 0px -30px 0px'});
+ document.querySelectorAll('.reveal,.ws').forEach(el=>obs.observe(el));
+ const nav=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)document.querySelectorAll('.nav-l a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+x.target.id))}),{threshold:0.15});
+ document.querySelectorAll('section[id]').forEach(s=>nav.observe(s));
+ setTimeout(()=>document.querySelectorAll('.ws,.reveal').forEach(el=>el.classList.add('visible')),3000);
+}
+
+function initTips(){
+ const tip=document.getElementById('gTip');
+ document.querySelectorAll('.hs-out').forEach(el=>{
+   el.addEventListener('mouseenter',e=>{
+     const t=el.dataset.tag||'',ti=el.dataset.title||'',d=el.dataset.desc||'',c=el.dataset.color||'var(--orange)';
+     tip.querySelector('.tt-tag').textContent=t;tip.querySelector('.tt-tag').style.color=c;
+     tip.querySelector('.tt-t').textContent=ti;tip.querySelector('.tt-t').style.color=c;
+     tip.querySelector('.tt-d').textContent=d;tip.querySelector('.tt-bar').style.background=c;
+     tip.classList.add('show');pTip(e);
+   });
+   el.addEventListener('mousemove',pTip);
+   el.addEventListener('mouseleave',()=>tip.classList.remove('show'));
+ });
+ function pTip(e){const r=tip.getBoundingClientRect();let x=e.clientX+16,y=e.clientY-12;if(x+r.width>window.innerWidth-16)x=e.clientX-r.width-16;if(y+r.height>window.innerHeight-16)y=e.clientY-r.height-12;if(y<8)y=8;tip.style.left=x+'px';tip.style.top=y+'px'}
+}
+
+</script>
+</body>
+</html>
