@@ -1,4 +1,4 @@
-# Calculadora de Cálculo de Texto Tipográfico | UTP
+# Calculadora de Texto Tipográfico 
 
 Herramienta interactiva y recurso didáctico diseñado para facilitar la comprensión y el cálculo de la extensión de texto compuesto en el diseño editorial. 
 
@@ -43,6 +43,5 @@ Dado que es un documento estático, no requiere servidor local, base de datos ni
 * **Curso:** Diseño Editorial
 * **Unidad:** Semana 2
 * **Docente / Autor:** Mg. Mario Quiroz (`d3magindesign`)
-* **Institución:** Universidad Tecnológica del Perú (UTP) - 2026
 
 > *Esta herramienta forma parte de una iniciativa de innovación educativa orientada a transformar conceptos editoriales abstractos en experiencias visuales e interactivas para la educación superior tecnológica.*
