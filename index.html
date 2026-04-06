@@ -82,22 +82,7 @@ select option{background:var(--navy);color:var(--cream)}
 .rv-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .rv-header h3{margin:0}
 
-/* Column visual box */
-.col-box{background:rgba(0,0,0,.15);border:2px dashed rgba(232,115,42,.5);border-radius:4px;position:relative;padding:36px 16px 20px 48px;min-height:260px;overflow:visible;box-shadow:inset 0 0 30px rgba(0,0,0,.2)}
-.col-box .col-w-bracket{position:absolute;top:8px;left:48px;right:16px;height:8px;border-left:2px solid var(--teal);border-right:2px solid var(--teal);border-top:2px solid var(--teal)}
-.col-w-label{position:absolute;top:-14px;left:50%;transform:translateX(-50%);background:var(--teal);color:var(--navy);font-family:var(--fm);font-size:.65rem;font-weight:700;padding:2px 10px;border-radius:3px;white-space:nowrap;z-index:10}
-.col-h-bracket{position:absolute;right:-14px;top:36px;bottom:20px;width:8px;border-top:2px solid var(--orange);border-bottom:2px solid var(--orange);border-right:2px solid var(--orange)}
-.col-h-label{position:absolute;right:-8px;top:50%;transform:translateY(-50%) rotate(90deg);background:var(--orange);color:var(--navy);font-family:var(--fm);font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:3px;white-space:nowrap}
-.col-golpe-badge{position:absolute;top:10px;right:30px;background:linear-gradient(135deg,var(--orange),#d4621c);color:var(--navy);font-family:var(--fm);font-weight:700;font-size:.68rem;padding:3px 12px;border-radius:100px;z-index:10}
-.col-ln{position:absolute;left:6px;top:36px;width:34px;text-align:right;font-family:var(--fm);font-size:.6rem;color:rgba(232,115,42,.5);user-select:none;padding-right:4px;border-right:1px solid rgba(232,115,42,.2)}
-.col-text{font-family:'Georgia','Times New Roman',serif;text-align:justify;hyphens:auto;-webkit-hyphens:auto;word-break:break-word;overflow-wrap:break-word;color:var(--cream-dark)}
-
-/* Hotspots - clearly visible, not clipped */
-.hs-out{position:absolute;z-index:100;display:flex;align-items:center;gap:6px;cursor:pointer;padding:4px 10px 4px 4px;border-radius:100px;background:rgba(10,22,40,.8);border:1px solid rgba(232,115,42,.3);transition:var(--tr);backdrop-filter:blur(4px)}
-.hs-out:hover{border-color:var(--orange);background:rgba(232,115,42,.1)}
-.hs-out .hd{width:10px;height:10px;border-radius:50%;flex-shrink:0;animation:hsp 2.5s infinite}
-@keyframes hsp{0%,100%{box-shadow:0 0 0 0 rgba(232,115,42,.4)}50%{box-shadow:0 0 0 6px rgba(232,115,42,0)}}
-.hs-out .hl-text{font-family:var(--fm);font-size:.6rem;color:var(--cream);white-space:nowrap}
+/* Column visual - now canvas-based */
 
 /* Result chips */
 .rc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
@@ -221,7 +206,7 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--or
 
 <!-- ═══ HERO ═══ -->
 <section id="hero"><div class="ctr">
-<div class="hb">Semana 2 · Diseño Editorial</div>
+<div class="hb">Semana 2 · Diseño de Información</div>
 <h1>Calculadora de <span class="hl">Texto</span> Tipográfico</h1>
 <p class="hs">Herramienta interactiva para calcular la extensión de texto compuesto usando sistemas de medición tipográfica anglosajón y francés.</p>
 <div class="tag">Paso 1 — Selecciona el sistema tipográfico</div>
@@ -287,26 +272,54 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--or
 <div class="rv">
 <div class="rv-header"><h3 style="font-size:.95rem">Visualización de Columna</h3><span class="ut" id="colUnitName" style="font-size:.7rem">picas</span></div>
 
-<!-- Ruler showing characters per line -->
-<div style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
-<span style="font-family:var(--fm);font-size:.6rem;color:var(--text-muted)">Caracteres →</span>
-<div style="flex:1;position:relative"><div class="ruler" id="dRuler" style="height:24px;border-bottom:2px solid var(--orange);background:repeating-linear-gradient(90deg,rgba(232,115,42,.4) 0px,rgba(232,115,42,.4) 1px,transparent 1px,transparent var(--tick,30px))"></div></div>
-<span style="font-family:var(--fm);font-size:.6rem;color:var(--text-muted)" id="rulerTotal"></span>
+<!-- Paper format selector -->
+<div style="display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:end;background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:var(--r-sm);padding:10px;margin-bottom:8px">
+<div class="fg" style="margin:0"><label style="font-size:.65rem">Formato de papel</label>
+<select id="paperSize" onchange="onPaperChange()" style="font-size:.78rem;padding:6px 8px">
+<option value="210,297">A4 — 210×297 mm</option>
+<option value="148,210">A5 — 148×210 mm</option>
+<option value="297,420">A3 — 297×420 mm</option>
+<option value="420,594">A2 — 420×594 mm</option>
+<option value="594,841">A1 — 594×841 mm</option>
+<option value="841,1189">A0 — 841×1189 mm</option>
+<option value="216,279">Letter — 216×279 mm</option>
+<option value="216,356">Legal — 216×356 mm</option>
+<option value="279,432">Tabloid — 279×432 mm</option>
+<option value="184,267">Executive — 184×267 mm</option>
+<option value="257,364">B4 — 257×364 mm</option>
+<option value="182,257">B5 — 182×257 mm</option>
+<option value="128,182">B6 — 128×182 mm</option>
+<option value="270,390">8K — 270×390 mm</option>
+<option value="195,270">16K — 195×270 mm</option>
+<option value="130,185">32K — 130×185 mm</option>
+<option value="custom">Personalizado</option>
+</select></div>
+<div class="fg" style="margin:0" id="customWGroup"><label style="font-size:.65rem">Ancho</label>
+<div style="display:flex;align-items:center;gap:3px"><input type="number" id="paperW" value="210" min="50" step="1" style="width:70px;font-size:.82rem;padding:6px" onchange="onPaperCustom()"><span class="ut">mm</span></div></div>
+<div class="fg" style="margin:0" id="customHGroup"><label style="font-size:.65rem">Alto</label>
+<div style="display:flex;align-items:center;gap:3px"><input type="number" id="paperH" value="297" min="50" step="1" style="width:70px;font-size:.82rem;padding:6px" onchange="onPaperCustom()"><span class="ut">mm</span></div></div>
 </div>
 
-<!-- Column box -->
-<div class="col-box" id="colBox">
-<div class="col-w-bracket"><span class="col-w-label" id="colWLabel">Ø = 24 picas</span></div>
-<div class="col-h-bracket"><span class="col-h-label" id="colHLabel">A.T.C.</span></div>
-<span class="col-golpe-badge" id="golpeBadge" style="right:16px"># Golpes: 0</span>
-<span class="col-golpe-badge" id="ccplBadge" style="left:48px;right:auto;background:var(--teal);top:10px">C.c.p.l.: —</span>
-<div class="col-ln" id="colLN" style="left:6px;top:36px;width:34px"></div>
-<div class="col-text" id="colText" lang="es"><span style="color:var(--text-muted);font-size:.82rem">Los resultados se mostrarán aquí en tiempo real al calcular...</span></div>
-
-<!-- Visible hotspots - BELOW the box, clearly readable -->
-<div class="hs-out" style="bottom:-22px;left:10px" data-tag="Medida vertical" data-title="Interlineado (I.)" data-desc="Distancia entre líneas base consecutivas en puntos tipográficos." data-color="var(--teal)"><div class="hd" style="background:var(--teal)"></div><span class="hl-text">Interlineado</span></div>
-<div class="hs-out" style="bottom:-22px;left:50%;transform:translateX(-50%)" data-tag="Conteo" data-title="Golpes (#G.m.)" data-desc="Cada carácter tipográfico (letra, espacio, signo) = 1 golpe." data-color="var(--orange)"><div class="hd" style="background:var(--orange)"></div><span class="hl-text"># Golpes</span></div>
-<div class="hs-out" style="bottom:-22px;right:10px" data-tag="Medida horizontal" data-title="Ancho de Columna (Ø)" data-desc="Medida en picas o cíceros. Unidad duodecimal: 1 pica/cícero = 12 puntos." data-color="var(--teal)"><div class="hd" style="background:var(--teal)"></div><span class="hl-text">Ancho (Ø)</span></div>
+<!-- Canvas page visualization (editorial grid style) -->
+<div style="background:linear-gradient(135deg,#c8c1b2,#d8d2c4);border-radius:var(--r-md);padding:20px;position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid var(--glass-border);background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E&quot;)" id="colBox">
+<div style="position:relative;box-shadow:0 2px 8px rgba(0,0,0,.12),0 8px 32px rgba(0,0,0,.08),0 0 0 1px rgba(0,0,0,.05)">
+<canvas id="pageCanvas" style="display:block;background:#fff;border-radius:2px"></canvas>
+<div id="pageTooltip" style="position:absolute;z-index:100;background:#1c1a17;color:rgba(246,243,236,.92);border-radius:6px;padding:8px 12px;font-size:.75rem;line-height:1.5;font-family:var(--fb);box-shadow:0 6px 24px rgba(0,0,0,.25);pointer-events:none;opacity:0;transition:opacity .15s;max-width:240px">
+<div style="font-family:var(--fd);font-weight:700;font-size:.7rem;color:#0097d7;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px" id="ptTitle"></div>
+<div style="font-family:var(--fm);font-weight:600;font-size:.78rem;color:#fff" id="ptVal"></div>
+<div style="margin-top:3px;padding-top:3px;border-top:1px solid rgba(255,255,255,.1);color:#e8a820;font-size:.7rem;display:none" id="ptFix"></div>
+</div>
+<!-- Dimension labels -->
+<div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-family:var(--fm);font-size:.68rem;font-weight:600;color:#7c7669;white-space:nowrap" id="dimTop">—</div>
+<div style="position:absolute;top:50%;right:-56px;transform:translateY(-50%) rotate(90deg);font-family:var(--fm);font-size:.68rem;font-weight:600;color:#7c7669;white-space:nowrap" id="dimSide">—</div>
+</div>
+<!-- Layer toggles -->
+<div style="display:flex;flex-wrap:wrap;gap:8px;background:rgba(246,243,236,.85);padding:6px 12px;border-radius:var(--r-sm);border:1px solid rgba(28,26,23,.1);font-size:.72rem">
+<label style="display:flex;align-items:center;gap:3px;color:#7c7669;cursor:pointer;font-weight:500"><input type="checkbox" id="pvMargins" checked onchange="drawPage()" style="accent-color:#0097d7;cursor:pointer">Márgenes</label>
+<label style="display:flex;align-items:center;gap:3px;color:#7c7669;cursor:pointer;font-weight:500"><input type="checkbox" id="pvTextArea" checked onchange="drawPage()" style="accent-color:#0097d7;cursor:pointer">Área texto</label>
+<label style="display:flex;align-items:center;gap:3px;color:#7c7669;cursor:pointer;font-weight:500"><input type="checkbox" id="pvBaseline" checked onchange="drawPage()" style="accent-color:#0097d7;cursor:pointer">Líneas base</label>
+<label style="display:flex;align-items:center;gap:3px;color:#7c7669;cursor:pointer;font-weight:500"><input type="checkbox" id="pvLineNums" checked onchange="drawPage()" style="accent-color:#0097d7;cursor:pointer">N° líneas</label>
+</div>
 </div>
 
 <!-- Result chips -->
@@ -316,7 +329,50 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--or
 <div class="chip"><div class="chip-l">C.c.p.l.</div><div class="chip-v" id="cvCcpl">—</div><div class="chip-u">car/línea</div></div>
 <div class="chip"><div class="chip-l">Renglones</div><div class="chip-v" id="cvCr">—</div><div class="chip-u">C.r.</div></div>
 <div class="chip"><div class="chip-l">Interlineado</div><div class="chip-v" id="cvI">—</div><div class="chip-u">pts</div></div>
+<div class="chip"><div class="chip-l">Líneas / página</div><div class="chip-v" id="cvLpp">—</div><div class="chip-u">lín/pág</div></div>
 <div class="chip big"><div class="chip-l">Extensión Total</div><div class="chip-v" id="cvPages">—</div><div class="chip-u">páginas</div><div class="pages-text" id="cvPagesText">Cantidad de páginas</div></div>
+</div>
+
+<!-- Factor de Error - Verificación InDesign -->
+<div style="background:rgba(232,115,42,.04);border:1px solid rgba(232,115,42,.15);border-radius:var(--r-md);padding:16px;margin-top:12px">
+<h3 style="font-family:var(--fd);font-size:.88rem;color:var(--orange);margin-bottom:4px;display:flex;align-items:center;gap:6px">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+Factor de Error — Verificación con InDesign</h3>
+<p style="font-size:.75rem;color:var(--text-secondary);margin-bottom:12px;line-height:1.5">Compara el resultado de la fórmula con la composición real en Adobe InDesign para determinar el margen de error del Factor Puntaje utilizado.</p>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px">
+<!-- Calculated values (auto from formula) -->
+<div style="background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:var(--r-sm);padding:10px">
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Resultado de la fórmula</div>
+<div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px"><span style="font-size:.72rem;color:var(--text-secondary)">Páginas calculadas:</span><span style="font-family:var(--fm);font-weight:700;color:var(--orange);font-size:.88rem" id="errCalcPages">—</span></div>
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font-size:.72rem;color:var(--text-secondary)">Caracteres (fórmula):</span><span style="font-family:var(--fm);font-weight:700;color:var(--orange);font-size:.88rem" id="errCalcChars">—</span></div>
+</div>
+<!-- InDesign verification inputs -->
+<div style="background:rgba(43,181,160,.04);border:1px solid rgba(43,181,160,.15);border-radius:var(--r-sm);padding:10px">
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--teal);text-transform:uppercase;letter-spacing:.1em;margin-bottom:6px">Verificación en InDesign</div>
+<div class="fg" style="margin-bottom:6px"><label style="font-size:.65rem">Páginas reales en InDesign</label><input type="number" id="errIdPages" placeholder="ej: 2" min="0.01" step="0.01" oninput="calcError()"></div>
+<div class="fg" style="margin:0"><label style="font-size:.65rem">Caracteres reales InDesign</label><input type="number" id="errIdChars" placeholder="ej: 9800" min="1" oninput="calcError()"></div>
+</div>
+</div>
+
+<!-- Error result -->
+<div id="errResult" style="display:none;border-radius:var(--r-sm);padding:12px;text-align:center">
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">
+<div>
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:2px">Error páginas</div>
+<div style="font-family:var(--fd);font-size:1.3rem;font-weight:800" id="errPctPages">—</div>
+</div>
+<div>
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:2px">Error caracteres</div>
+<div style="font-family:var(--fd);font-size:1.3rem;font-weight:800" id="errPctChars">—</div>
+</div>
+<div>
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase;margin-bottom:2px">Precisión fórmula</div>
+<div style="font-family:var(--fd);font-size:1.3rem;font-weight:800" id="errPrecision">—</div>
+</div>
+</div>
+<div style="font-size:.72rem;color:var(--text-secondary);margin-top:8px;line-height:1.5" id="errExplain"></div>
+</div>
 </div>
 </div>
 </div>
@@ -492,10 +548,283 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--or
 </div>
 </div></section>
 
-<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño Editorial</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 2</span><br><span style="font-size:.68rem"></span></div></footer>
+<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño de Información</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 3</span><br><span style="font-size:.68rem">Todos los derechos reservados</span></div></footer>
 
 <script>
-// ═══ Interactive Interlineado Canvas ═══
+// ═══ PAPER FORMAT ═══
+function getPaperDims(){
+ const sel=document.getElementById('paperSize').value;
+ if(sel==='custom'){
+   return{w:parseFloat(document.getElementById('paperW').value)||210,h:parseFloat(document.getElementById('paperH').value)||297};
+ }
+ const [w,h]=sel.split(',').map(Number);
+ return{w,h};
+}
+function onPaperChange(){
+ const sel=document.getElementById('paperSize').value;
+ const isCustom=sel==='custom';
+ document.getElementById('paperW').readOnly=!isCustom;
+ document.getElementById('paperH').readOnly=!isCustom;
+ if(!isCustom){const[w,h]=sel.split(',').map(Number);document.getElementById('paperW').value=w;document.getElementById('paperH').value=h}
+ drawPage();
+}
+function onPaperCustom(){document.getElementById('paperSize').value='custom';drawPage()}
+
+// ═══ CANVAS PAGE VISUALIZATION (editorial grid style) ═══
+const pgCanvas=document.getElementById('pageCanvas'),pgCtx=pgCanvas.getContext('2d');
+let pgHotspots=[];
+
+function drawPage(){
+ const wrap=document.getElementById('colBox');
+ if(!wrap)return;
+ const maxW=wrap.clientWidth-40,maxH=420;
+ 
+ // Page dimensions from format selector
+ const paper=getPaperDims();
+ const pageW_mm=paper.w, pageH_mm=paper.h;
+ const margin=15; // mm margins for display
+ const colW_mm=CR?(CR.colWidth*(csys==='a'?4.233:4.512)):80;
+ const textH_mm=CR?CR.atccm*10:200;
+ 
+ // Scale to fit
+ const sc=Math.min(maxW/pageW_mm, maxH/pageH_mm, 2.5);
+ const cw=Math.round(pageW_mm*sc), ch=Math.round(pageH_mm*sc);
+ const dpr=window.devicePixelRatio||1;
+ pgCanvas.width=cw*dpr;pgCanvas.height=ch*dpr;
+ pgCanvas.style.width=cw+'px';pgCanvas.style.height=ch+'px';
+ pgCtx.setTransform(dpr,0,0,dpr,0,0);
+ 
+ const s=v=>v*sc;
+ const mTop=s(margin),mIn=s(margin),mOut=s(margin);
+ const tw=s(colW_mm),th=s(Math.min(textH_mm,pageH_mm-2*margin));
+ const tx=(cw-tw)/2; // Center column horizontally
+ const ty=mTop;
+ 
+ // Clear
+ pgCtx.fillStyle='#fff';pgCtx.fillRect(0,0,cw,ch);
+ 
+ // Text area
+ if(document.getElementById('pvTextArea').checked){
+   pgCtx.fillStyle='rgba(255,250,235,.5)';pgCtx.fillRect(tx,ty,tw,th);
+ }
+ 
+ // Baseline grid
+ if(document.getElementById('pvBaseline').checked&&CR){
+   const sys=SYS[csys];
+   const leadMM=CR.leading*sys.pt;
+   const leadPx=s(leadMM);
+   const lines=Math.min(Math.ceil(CR.cr),Math.floor(th/leadPx));
+   const numFS=Math.max(6,Math.min(10,leadPx*.65));
+   const showNums=document.getElementById('pvLineNums').checked&&tx>12;
+   const numInt=Math.max(1,Math.ceil((numFS+1)/leadPx));
+   
+   for(let i=0;i<=lines;i++){
+     const y=ty+i*leadPx;
+     if(y>ty+th+1)break;
+     pgCtx.strokeStyle='rgba(0,151,215,.2)';pgCtx.lineWidth=.5;
+     pgCtx.beginPath();pgCtx.moveTo(tx,y);pgCtx.lineTo(tx+tw,y);pgCtx.stroke();
+   }
+   // Line numbers
+   if(showNums){
+     pgCtx.font=`500 ${numFS}px "JetBrains Mono",monospace`;
+     pgCtx.textAlign='right';pgCtx.textBaseline='middle';
+     for(let i=1;i<=lines;i++){
+       const y=ty+i*leadPx;
+       if(y>ty+th+1)break;
+       if(i%numInt===0||i===1||i===lines){
+         const m10=i%10===0,m5=i%5===0;
+         pgCtx.fillStyle=m10?'rgba(0,151,215,.7)':m5?'rgba(0,151,215,.5)':'rgba(0,151,215,.3)';
+         pgCtx.fillText(String(i),tx-3,y);
+         pgCtx.strokeStyle=m10?'rgba(0,151,215,.4)':'rgba(0,151,215,.15)';
+         pgCtx.lineWidth=m10?1:.5;
+         pgCtx.beginPath();pgCtx.moveTo(tx-1,y);pgCtx.lineTo(tx+2,y);pgCtx.stroke();
+       }
+     }
+   }
+ }
+ 
+ // Margins
+ if(document.getElementById('pvMargins').checked){
+   pgCtx.fillStyle='rgba(212,46,107,.04)';
+   pgCtx.fillRect(0,0,cw,ty); // top
+   pgCtx.fillRect(0,ty+th,cw,ch-ty-th); // bottom
+   pgCtx.fillRect(0,ty,tx,th); // left
+   pgCtx.fillRect(tx+tw,ty,cw-tx-tw,th); // right
+   // Page border
+   pgCtx.strokeStyle='rgba(28,26,23,.2)';pgCtx.lineWidth=1;
+   pgCtx.strokeRect(.5,.5,cw-1,ch-1);
+   // Text area dashed border
+   pgCtx.strokeStyle='rgba(212,46,107,.4)';pgCtx.setLineDash([5,3]);
+   pgCtx.strokeRect(tx,ty,tw,th);pgCtx.setLineDash([]);
+   // Margin labels
+   const mFS=Math.max(7,Math.min(11,sc*2.5));
+   pgCtx.fillStyle='rgba(180,40,80,.5)';
+   pgCtx.font=`500 ${mFS}px "JetBrains Mono",monospace`;
+   pgCtx.textAlign='center';pgCtx.textBaseline='middle';
+   if(ty>14){
+     pgCtx.fillText('Margen superior',cw/2,ty/2);
+   }
+   // Column width label (Ø)
+   pgCtx.fillStyle='rgba(0,151,215,.7)';
+   pgCtx.font=`700 ${Math.max(9,mFS+1)}px "JetBrains Mono",monospace`;
+   pgCtx.fillText(CR?'Ø = '+CR.colWidth+' '+SYS[csys].u:'Ø',tx+tw/2,ty-6>8?ty-6:ty+12);
+   // Height label
+   pgCtx.save();pgCtx.translate(tx+tw+12,ty+th/2);pgCtx.rotate(-Math.PI/2);
+   pgCtx.fillStyle='rgba(232,115,42,.7)';
+   pgCtx.font=`700 ${Math.max(8,mFS)}px "JetBrains Mono",monospace`;
+   pgCtx.fillText(CR?CR.atccm.toFixed(1)+' cm':'A.T.C.',0,0);
+   pgCtx.restore();
+ }
+ 
+ // Crop marks
+ pgCtx.strokeStyle='rgba(28,26,23,.15)';pgCtx.lineWidth=.6;
+ [[0,0,-1,0],[0,0,0,-1],[cw,0,1,0],[cw,0,0,-1],[0,ch,-1,0],[0,ch,0,1],[cw,ch,1,0],[cw,ch,0,1]].forEach(([x,y,dx,dy])=>{
+   pgCtx.beginPath();pgCtx.moveTo(x+dx*3,y+dy*3);pgCtx.lineTo(x+dx*7,y+dy*7);pgCtx.stroke();
+ });
+ 
+ // Golpes label
+ if(CR){
+   pgCtx.fillStyle='rgba(28,26,23,.5)';
+   const gFS=Math.max(7,Math.min(10,sc*2));
+   pgCtx.font=`500 ${gFS}px "DM Sans",sans-serif`;
+   pgCtx.textAlign='center';pgCtx.textBaseline='top';
+   pgCtx.fillText('#G.m.: '+CR.golpes.toLocaleString()+' · C.c.p.l.: '+Math.floor(CR.ccpl)+' · C.r.: '+Math.ceil(CR.cr),cw/2,ty+th+8);
+ }
+ 
+ // Dimension labels
+ document.getElementById('dimTop').textContent=pageW_mm.toFixed(0)+' mm';
+ document.getElementById('dimSide').textContent=pageH_mm.toFixed(0)+' mm';
+ 
+ // Build hotspots for mouse
+ pgHotspots=[];
+ if(CR){
+   pgHotspots.push({x:tx,y:ty,w:tw,h:th,title:'Área de texto (Mancha)',val:CR.colWidth+' '+SYS[csys].u+' × '+CR.atccm.toFixed(1)+' cm',fix:Math.ceil(CR.cr)+' líneas base · '+CR.golpes.toLocaleString()+' golpes'});
+   pgHotspots.push({x:0,y:0,w:cw,h:ty,title:'Margen superior',val:margin.toFixed(0)+' mm',fix:''});
+   pgHotspots.push({x:0,y:ty+th,w:cw,h:ch-ty-th,title:'Margen inferior',val:'',fix:CR.pages>0?'A.C.T.: '+CR.boxHeight+' cm → '+CR.pages.toFixed(4)+' páginas':''});
+ }
+}
+
+// Canvas tooltip
+const pTip=document.getElementById('pageTooltip');
+document.getElementById('pageCanvas').addEventListener('mousemove',e=>{
+ const rect=pgCanvas.getBoundingClientRect();
+ const mx=e.clientX-rect.left,my=e.clientY-rect.top;
+ let found=null;
+ for(let i=pgHotspots.length-1;i>=0;i--){
+   const h=pgHotspots[i];
+   if(mx>=h.x&&mx<=h.x+h.w&&my>=h.y&&my<=h.y+h.h){found=h;break}
+ }
+ if(found){
+   document.getElementById('ptTitle').textContent=found.title;
+   document.getElementById('ptVal').textContent=found.val;
+   const fx=document.getElementById('ptFix');fx.textContent=found.fix;fx.style.display=found.fix?'block':'none';
+   let tx2=mx+14,ty2=my-10;
+   if(tx2+220>parseInt(pgCanvas.style.width))tx2=mx-230;
+   if(ty2<4)ty2=4;
+   pTip.style.left=tx2+'px';pTip.style.top=ty2+'px';pTip.style.opacity='1';
+ } else {pTip.style.opacity='0'}
+});
+document.getElementById('pageCanvas').addEventListener('mouseleave',()=>{pTip.style.opacity='0'});
+
+// Initial draw
+setTimeout(drawPage,100);
+window.addEventListener('resize',()=>drawPage());
+
+// ═══ FACTOR DE ERROR ═══
+function calcError(){
+ const idPages=parseFloat(document.getElementById('errIdPages').value);
+ const idChars=parseInt(document.getElementById('errIdChars').value);
+ const res=document.getElementById('errResult');
+ if(!CR&&!idPages&&!idChars){res.style.display='none';return}
+ 
+ let hasData=false;
+ const calcPages=CR?CR.pages:0;
+ const calcChars=CR?CR.golpes:0;
+ 
+ // Update calculated values display
+ document.getElementById('errCalcPages').textContent=calcPages>0?calcPages.toFixed(4):'—';
+ document.getElementById('errCalcChars').textContent=calcChars>0?calcChars.toLocaleString():'—';
+ 
+ let errPg='—',errCh='—',precision='—',explain='';
+ let errColor='var(--text-muted)';
+ 
+ if(idPages>0&&calcPages>0){
+   const diff=Math.abs(calcPages-idPages);
+   const pct=(diff/idPages)*100;
+   const accuracyPg=100-pct;
+   errPg=pct.toFixed(2)+'%';
+   hasData=true;
+   
+   if(pct<=3){errColor='var(--teal)';explain='El Factor Puntaje utilizado tiene excelente precisión (error ≤3%). '}
+   else if(pct<=5){errColor='var(--orange)';explain='El Factor Puntaje tiene precisión aceptable (error 3–5%). La variación se debe a la distribución estadística de caracteres anchos vs. estrechos en español. '}
+   else{errColor='var(--red)';explain='El error supera el 5%. Se recomienda recalcular el F.p. específico midiendo directamente en InDesign (caracteres ÷ líneas ÷ ancho en picas). '}
+   
+   precision=accuracyPg.toFixed(1)+'%';
+ }
+ 
+ if(idChars>0&&calcChars>0){
+   const diffCh=Math.abs(calcChars-idChars);
+   const pctCh=(diffCh/idChars)*100;
+   errCh=pctCh.toFixed(2)+'%';
+   hasData=true;
+   if(!explain){
+     const accCh=100-pctCh;
+     precision=accCh.toFixed(1)+'%';
+     if(pctCh<=3)explain='Coincidencia excelente entre el manuscrito y la composición InDesign.';
+     else explain='Diferencia en caracteres: el texto en InDesign puede incluir caracteres adicionales (folios, encabezados, notas al pie) o el conteo de Word incluye metadatos.';
+   }
+ }
+ 
+ if(hasData){
+   res.style.display='block';
+   res.style.background=errColor==='var(--teal)'?'rgba(43,181,160,.06)':errColor==='var(--orange)'?'rgba(232,115,42,.06)':'rgba(231,76,60,.06)';
+   res.style.border='1px solid '+(errColor==='var(--teal)'?'rgba(43,181,160,.2)':errColor==='var(--orange)'?'rgba(232,115,42,.2)':'rgba(231,76,60,.2)');
+   document.getElementById('errPctPages').textContent=errPg;
+   document.getElementById('errPctPages').style.color=errColor;
+   document.getElementById('errPctChars').textContent=errCh;
+   document.getElementById('errPctChars').style.color=errColor;
+   document.getElementById('errPrecision').textContent=precision;
+   document.getElementById('errPrecision').style.color=errColor;
+   document.getElementById('errExplain').textContent=explain;
+ } else {
+   res.style.display='none';
+ }
+}
+
+function renderCol(r){
+ // Update chips
+ if(!r){
+   ['cvW','cvFP','cvCcpl','cvCr','cvI','cvLpp','cvPages'].forEach(id=>document.getElementById(id).textContent='—');
+   document.getElementById('cvPagesText').textContent='Cantidad de páginas';
+   drawPage();return;
+ }
+ document.getElementById('cvW').textContent=r.colWidth;document.getElementById('cuW').textContent=SYS[csys].u;
+ document.getElementById('cvFP').textContent=r.fp.toFixed(2);
+ document.getElementById('cvCcpl').textContent=r.ccpl.toFixed(1);
+ document.getElementById('cvCr').textContent=Math.ceil(r.cr);
+ document.getElementById('cvI').textContent=r.leading;
+ // Lines per page
+ if(r.boxHeight>0&&r.leading>0){
+   const sys=SYS[csys];
+   const leadMM=r.leading*sys.pt;
+   const boxMM=r.boxHeight*10;
+   const lpp=Math.floor(boxMM/leadMM);
+   document.getElementById('cvLpp').textContent=lpp;
+ } else {
+   document.getElementById('cvLpp').textContent='—';
+ }
+ if(r.pages>0){
+   document.getElementById('cvPages').textContent=r.pages.toFixed(4);
+   const full=Math.floor(r.pages),frac=r.pages-full;
+   document.getElementById('cvPagesText').textContent='Cantidad de páginas: '+Math.ceil(r.pages)+' página'+(Math.ceil(r.pages)!==1?'s':'')+' ('+full+' completa'+(full!==1?'s':'')+' + '+(frac*100).toFixed(1)+'%)';
+ } else {
+   document.getElementById('cvPages').textContent='—';
+   document.getElementById('cvPagesText').textContent='Ingresa A.C.T. para calcular cantidad de páginas';
+ }
+ document.querySelectorAll('.chip').forEach((c,i)=>{c.classList.remove('active');setTimeout(()=>c.classList.add('active'),150*i);setTimeout(()=>{if(!c.classList.contains('big'))c.classList.remove('active')},150*i+2000)});
+ calcError();
+ drawPage();
+}
 const ilMetrics={upm:1000,asc:683,xh:450,desc:217,get ar(){return this.asc/this.upm},get xr(){return this.xh/this.upm},get dr(){return this.desc/this.upm}};
 const PX=96/72;
 function updateILCanvas(){
@@ -573,7 +902,7 @@ const FPD={
 const LOR='En el vasto campo del diseño editorial, la tipografía desempeña un papel fundamental como vehículo de comunicación visual. Cada decisión sobre el tipo de letra, el puntaje, el interlineado y el ancho de columna afecta directamente la experiencia de lectura y la composición armónica de la página. Los diseñadores deben considerar cuidadosamente la relación entre la mancha tipográfica y los márgenes para lograr una composición equilibrada. La legibilidad depende no solo del tamaño del carácter, sino también del espacio entre letras, palabras y líneas del texto compuesto. Un texto bien compuesto invita al lector a sumergirse en el contenido sin esfuerzo alguno. El cálculo preciso de la extensión del texto permite planificar la distribución del contenido en las páginas disponibles.';
 let csys='a',CR=null,fpMode='specific';
 
-document.addEventListener('DOMContentLoaded',()=>{bFPG();bFPT();bRuler();initObs();initTips();uUI();
+document.addEventListener('DOMContentLoaded',()=>{bFPG();bFPT();drawPage();initObs();initTips();uUI();
  document.getElementById('inSize').addEventListener('change',function(){
    const cv=this.value;
    document.getElementById('inSizeCustom').style.display=cv==='custom'?'':'none';
@@ -581,7 +910,7 @@ document.addEventListener('DOMContentLoaded',()=>{bFPG();bFPT();bRuler();initObs
    syncCalcToIL();
  });
  document.getElementById('inSizeCustom').addEventListener('input',function(){autoFP();syncCalcToIL()});
- document.getElementById('inColWidth').addEventListener('input',function(){parseColWidth();bRuler()});
+ document.getElementById('inColWidth').addEventListener('input',function(){parseColWidth();drawPage()});
  document.getElementById('inLeading').addEventListener('input',syncCalcToIL);
 });
 
@@ -629,7 +958,7 @@ function uUI(){
  document.getElementById('eq3u').textContent='pts '+(a?'PostScript':'Didot');
  document.getElementById('colUnitName').textContent=s.u;
  document.getElementById('duoNote').textContent='Sistema duodecimal: 1 '+s.un+' = 12 puntos '+(a?'PostScript':'Didot');
- bRuler();
+ drawPage();
 }
 
 function showDialog(id){document.getElementById('dlg-'+id).classList.add('show')}
@@ -654,73 +983,6 @@ function getActiveFP(){
  if(fpMode==='specific')return parseFloat(document.getElementById('fpSpecVal').value)||null;
  if(fpMode==='general')return parseFloat(document.getElementById('fpGenVal').value)||null;
  return parseFloat(document.getElementById('fpManVal').value)||null;
-}
-
-function bRuler(){
- const ruler=document.getElementById('dRuler'),cw=parseColWidth()||24;
- const s=SYS[csys];
- if(!ruler||!ruler.parentElement)return;
- const pw=ruler.parentElement.offsetWidth||500;
- // Show character positions based on ccpl if calculated, otherwise pica marks
- const ccpl=CR?CR.ccpl:cw*2.5;
- const charCount=Math.floor(ccpl);
- const tickPx=pw/charCount;
- ruler.style.setProperty('--tick',Math.max(tickPx,3)+'px');
- ruler.innerHTML='';
- // Show marks every 5 or 10 characters
- const step=charCount<=30?5:charCount<=60?10:20;
- for(let i=0;i<=charCount;i+=step){
-   const p=(i/charCount)*100;
-   ruler.innerHTML+=`<span class="tick-label" style="left:${p}%;font-size:.55rem">${i}</span>`;
-   if(i>0&&i<charCount)ruler.innerHTML+=`<div style="position:absolute;top:0;left:${p}%;width:1px;height:100%;background:var(--orange);opacity:.3"></div>`;
- }
- const rt=document.getElementById('rulerTotal');
- if(rt)rt.textContent=charCount+' car';
-}
-
-function renderCol(r){
- const ct=document.getElementById('colText'),ln=document.getElementById('colLN'),gb=document.getElementById('golpeBadge'),cb=document.getElementById('ccplBadge');
- const wl=document.getElementById('colWLabel'),hl=document.getElementById('colHLabel');
- if(!r){ct.innerHTML='<span style="color:var(--text-muted);font-size:.82rem">Los resultados se mostrarán aquí en tiempo real al calcular...</span>';ln.innerHTML='';gb.textContent='# Golpes: 0';cb.textContent='C.c.p.l.: —';bRuler();return}
- const ccf=Math.floor(r.ccpl),maxLines=50,lc=Math.min(Math.ceil(r.cr),maxLines);
- const fs=Math.max(9,Math.min(parseInt(r.size)||10,14));
- const lh=(r.leading/(parseInt(r.size)||10));
- let t=LOR;while(t.length<r.golpes)t+=' '+LOR;t=t.substring(0,r.golpes);
- let h='',n='',p=0;
- for(let i=0;i<lc&&p<t.length;i++){
-   const c=t.substring(p,p+ccf);
-   h+=`<div style="border-bottom:1px solid rgba(232,115,42,.06);white-space:nowrap;overflow:hidden">${c}</div>`;
-   n+=`<div style="height:${lh}em;line-height:${lh};display:flex;align-items:center;justify-content:flex-end">${i+1}</div>`;
-   p+=ccf;
- }
- const remaining=Math.ceil(r.cr)-lc;
- if(remaining>0){
-   h+=`<div style="color:var(--text-muted);font-style:italic;padding:8px 0;text-align:center;font-family:var(--fm);font-size:.7rem;border-top:2px dashed rgba(232,115,42,.2);margin-top:4px">… ${remaining} renglones más …</div>`;
-   n+=`<div style="height:auto;padding:8px 0;font-style:italic;color:var(--text-muted);font-size:.5rem;text-align:right">…</div>`;
- }
- ct.style.fontSize=fs+'px';ct.style.lineHeight=lh;ct.innerHTML=h;
- ln.style.fontSize=fs+'px';ln.style.lineHeight=lh;ln.innerHTML=n;
- gb.textContent='# Golpes: '+r.golpes.toLocaleString();
- cb.textContent='C.c.p.l.: '+ccf+' car/línea';
- wl.textContent='Ø = '+r.colWidth+' '+SYS[csys].u;
- hl.textContent=r.atccm.toFixed(1)+' cm';
-
- // Update chips
- document.getElementById('cvW').textContent=r.colWidth;document.getElementById('cuW').textContent=SYS[csys].u;
- document.getElementById('cvFP').textContent=r.fp.toFixed(2);
- document.getElementById('cvCcpl').textContent=r.ccpl.toFixed(1);
- document.getElementById('cvCr').textContent=Math.ceil(r.cr);
- document.getElementById('cvI').textContent=r.leading;
- if(r.pages>0){
-   document.getElementById('cvPages').textContent=r.pages.toFixed(4);
-   const full=Math.floor(r.pages),frac=r.pages-full;
-   document.getElementById('cvPagesText').textContent='Cantidad de páginas: '+Math.ceil(r.pages)+' página'+(Math.ceil(r.pages)!==1?'s':'')+' ('+full+' completa'+(full!==1?'s':'')+' + '+(frac*100).toFixed(1)+'%)';
- } else {
-   document.getElementById('cvPages').textContent='—';
-   document.getElementById('cvPagesText').textContent='Ingresa A.C.T. (tipo de publicación) para calcular cantidad de páginas';
- }
- document.querySelectorAll('.chip').forEach((c,i)=>{c.classList.remove('active');setTimeout(()=>c.classList.add('active'),150*i);setTimeout(()=>{if(!c.classList.contains('big'))c.classList.remove('active')},150*i+2000)});
- bRuler();
 }
 
 function bFPG(){document.getElementById('fpGGrid').innerHTML=FPG.map(f=>`<div class="fpg" data-v="${f.v}"><div class="fr">${f.r} pts</div><div class="fv">${f.v}</div></div>`).join('');
@@ -768,7 +1030,7 @@ function calculate(){
  else{document.getElementById('eq6r').textContent='Falta A.C.T.'}
  document.querySelectorAll('.ws').forEach((ws,i)=>setTimeout(()=>ws.classList.add('done'),150*i));
 
- bRuler();renderCol(CR);hlFP(font,size);
+ drawPage();renderCol(CR);hlFP(font,size);
  // Sync interlineado viewer with calculator values
  if(size){document.getElementById('ilFontSize').value=parseInt(size)||72}
  if(lead){const sz=parseInt(size)||72;document.getElementById('ilFactor2').value=(lead/sz).toFixed(2)}
@@ -810,7 +1072,7 @@ RESULTADOS
 
 RESULTADO: ${r.pages.toFixed(4)} páginas (${Math.ceil(r.pages)} págs)
 ---
-Diseño de Información · Semana 2 · Mg. Mario Quiroz · d3magindesign`);
+Diseño de Información · Semana 3 · Mg. Mario Quiroz · d3magindesign`);
  window.location.href='mailto:'+em+'?cc=c12139@utp.edu.pe&subject='+sub+'&body='+bd;
 }
 function printPDF(){if(!CR){alert('Primero realiza un cálculo.');return}window.print()}
@@ -820,7 +1082,7 @@ function resetAll(){
  CR=null;document.querySelectorAll('.ws').forEach(ws=>ws.classList.remove('done'));
  document.querySelectorAll('.fpt td.ac').forEach(t=>t.classList.remove('ac'));
  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
- renderCol(null);bRuler();uUI();
+ renderCol(null);drawPage();uUI();
 }
 
 function initObs(){
