@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Texto Tipográfico</title>
+<title>Calculadora de Texto Tipográfico | d3magindesign</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0a1628;--navy-mid:#12203d;--orange:#e8732a;--orange-glow:#ff8c42;--cream:#f5f0e8;--cream-dark:#e8e0d0;--teal:#2bb5a0;--red:#e74c3c;--text-primary:#f5f0e8;--text-secondary:rgba(245,240,232,.7);--text-muted:rgba(245,240,232,.45);--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.08);--r-sm:6px;--r-md:12px;--r-lg:20px;--r-xl:28px;--tr:.35s cubic-bezier(.22,1,.36,1);--fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace}
@@ -197,7 +197,7 @@ footer{background:var(--navy-mid);border-top:1px solid var(--glass-border);paddi
   /* Print header */
   #hero{padding:0!important;text-align:left!important;border-bottom:2px solid #111;padding-bottom:8px!important;margin-bottom:8px}
   #hero::before{content:'INFORME DE CÁLCULO DE TEXTO TIPOGRÁFICO';font-family:var(--fd);font-weight:800;font-size:14pt;color:#111;display:block;margin-bottom:2px}
-  #hero::after{content:'Diseño de Información · Semana 3 · Mg. Mario Quiroz · d3magindesign · UTP 2026';font-size:8pt;color:#666;display:block}
+  #hero::after{content:'Diseño de Editorial · Semana 3 · Mg. Mario Quiroz · d3magindesign · 2026';font-size:8pt;color:#666;display:block}
   /* Calculator panel */
   .calc-wrap{display:block!important;grid-template-columns:1fr!important}
   .cp{background:#fff!important;border:1px solid #ddd!important;padding:10px!important;margin-bottom:8px!important;page-break-inside:avoid}
@@ -292,8 +292,8 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--or
 
 <!-- ═══ HERO ═══ -->
 <section id="hero"><div class="ctr">
-<div class="hb">Semana 3 · Diseño de Información</div>
-<h1><br> Calculadora de </br> <span class="hl">Texto</span> Tipográfico</h1>
+<div class="hb">Semana 3 · Diseño Editorial</div>
+<h1><br>Cálculo de <span class="hl">Texto</span> Tipográfico</h1>
 <p class="hs">Herramienta interactiva para calcular la extensión de texto compuesto usando sistemas de medición tipográfica anglosajón y francés.</p>
 <div class="tag">Paso 1 — Selecciona el sistema tipográfico</div>
 <div class="ss">
@@ -468,7 +468,7 @@ Factor de Error — Verificación con InDesign</h3>
 <section id="extension"><div class="ctr">
 <div class="tag">Extensión Editorial</div>
 <h2>Calculador de <span class="hl">Extensión</span> de la Obra</h2>
-<p style="color:var(--text-secondary);max-width:750px;margin-bottom:16px">Proyecta la extensión final de tu publicación ingresando la cantidad de páginas estimadas en cada sección. La estructura sigue el esquema estándar de la industria editorial.</p>
+<p style="color:var(--text-secondary);max-width:750px;margin-bottom:16px">Proyecta la extensión final de tu publicación ingresando la cantidad de páginas estimadas en cada sección. Pasa el cursor sobre cada nombre para conocer su definición. La estructura sigue el esquema estándar de la industria editorial.</p>
 
 <!-- 1. PRELIMINARES -->
 <div style="background:rgba(43,181,160,.04);border:1px solid rgba(43,181,160,.15);border-radius:var(--r-md);padding:16px;margin-bottom:12px">
@@ -477,16 +477,9 @@ Factor de Error — Verificación con InDesign</h3>
 <div><h3 style="font-size:.88rem;margin:0;color:var(--teal)">Preliminares</h3>
 <p style="font-size:.68rem;color:var(--text-muted);margin:0">Elementos iniciales que preceden al contenido principal</p></div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px">
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Anteportada</div><input type="number" class="ext-input" id="extAnteportada" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Portada</div><input type="number" class="ext-input" id="extPortada" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Legales</div><input type="number" class="ext-input" id="extLegales" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Dedicatoria</div><input type="number" class="ext-input" id="extDedicatoria" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Tabla contenido</div><input type="number" class="ext-input" id="extIndice" value="2" min="0" max="50" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Reconocimientos</div><input type="number" class="ext-input" id="extReconocimientos" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Prólogo</div><input type="number" class="ext-input" id="extPrologo" value="2" min="0" max="50" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px" id="extPrelimGrid">
 </div>
-<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--teal)">Subtotal Preliminares: <strong id="extSubPrelim">9</strong> págs</div>
+<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--teal)">Subtotal Preliminares: <strong id="extSubPrelim">0</strong> págs</div>
 </div>
 
 <!-- 2. CUERPO PRINCIPAL -->
@@ -494,13 +487,9 @@ Factor de Error — Verificación con InDesign</h3>
 <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
 <span style="font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--orange)">2</span>
 <div><h3 style="font-size:.88rem;margin:0;color:var(--orange)">Cuerpo Principal</h3>
-<p style="font-size:.68rem;color:var(--text-muted);margin:0">El núcleo de la obra — apertura, contenido y cierre de capítulos</p></div>
+<p style="font-size:.68rem;color:var(--text-muted);margin:0">Núcleo de la obra — resultado del cálculo de texto tipográfico</p></div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px">
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📑</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Apertura de capítulo</div><input type="number" class="ext-input" id="extApertura" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📖</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Contenido (Cuerpo)</div><input type="number" class="ext-input" id="extContenido" value="0" min="0" max="2000" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"><div style="font-size:.55rem;color:var(--orange);margin-top:2px;font-family:var(--fm)" id="extFromCalc">← Usa el valor de la calculadora</div></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Continuación</div><input type="number" class="ext-input" id="extContinuacion" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">🔚</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Cierre de capítulo</div><input type="number" class="ext-input" id="extCierre" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px" id="extCuerpoGrid">
 </div>
 <div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--orange)">Subtotal Cuerpo: <strong id="extSubCuerpo">0</strong> págs</div>
 </div>
@@ -512,25 +501,58 @@ Factor de Error — Verificación con InDesign</h3>
 <div><h3 style="font-size:.88rem;margin:0">Páginas Finales</h3>
 <p style="font-size:.68rem;color:var(--text-muted);margin:0">Secciones de referencia, apoyo y cierre técnico</p></div>
 </div>
-<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px">
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📑</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Apéndice</div><input type="number" class="ext-input" id="extApendice" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📝</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Notas</div><input type="number" class="ext-input" id="extNotas" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">🔍</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Índice temático</div><input type="number" class="ext-input" id="extIndiceTem" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📚</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Bibliografía</div><input type="number" class="ext-input" id="extBibliografia" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
-<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">🏁</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Colofón</div><input type="number" class="ext-input" id="extColofon" value="1" min="0" max="10" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px" id="extFinalesGrid">
 </div>
-<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--text-secondary)">Subtotal Finales: <strong id="extSubFinales">1</strong> págs</div>
+<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--text-secondary)">Subtotal Finales: <strong id="extSubFinales">0</strong> págs</div>
 </div>
 
-<!-- RESUMEN -->
-<div style="background:linear-gradient(135deg,rgba(43,181,160,.08),rgba(232,115,42,.06));border:2px solid rgba(43,181,160,.25);border-radius:var(--r-md);padding:18px;text-align:center">
-<div style="font-family:var(--fm);font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px">Total de Páginas Estimadas</div>
-<div style="font-family:var(--fd);font-size:2.4rem;font-weight:800;color:var(--teal);line-height:1" id="extTotal">10</div>
-<div style="font-family:var(--fm);font-size:.72rem;color:var(--text-secondary);margin-top:4px" id="extPliego">Pliego recomendado: <strong style="color:var(--orange)" id="extPliegoVal">12 págs</strong> (múltiplo de 4)</div>
-<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;font-size:.7rem">
-<div style="background:rgba(43,181,160,.08);border-radius:var(--r-sm);padding:6px"><span style="color:var(--text-muted)">Preliminares</span><br><strong style="color:var(--teal)" id="extResPrelim">9</strong></div>
-<div style="background:rgba(232,115,42,.08);border-radius:var(--r-sm);padding:6px"><span style="color:var(--text-muted)">Cuerpo</span><br><strong style="color:var(--orange)" id="extResCuerpo">0</strong></div>
-<div style="background:rgba(255,255,255,.04);border-radius:var(--r-sm);padding:6px"><span style="color:var(--text-muted)">Finales</span><br><strong style="color:var(--cream)" id="extResFinales">1</strong></div>
+<!-- RESUMEN DUAL -->
+<div style="background:linear-gradient(135deg,rgba(43,181,160,.08),rgba(232,115,42,.06));border:2px solid rgba(43,181,160,.25);border-radius:var(--r-md);padding:18px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:14px">
+<!-- Cálculo de texto (fórmula) -->
+<div style="text-align:center;background:rgba(232,115,42,.06);border:1px solid rgba(232,115,42,.15);border-radius:var(--r-sm);padding:12px">
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Cálculo de Texto (Fórmula)</div>
+<div style="font-family:var(--fd);font-size:1.8rem;font-weight:800;color:var(--orange);line-height:1" id="extCalcTexto">—</div>
+<div style="font-family:var(--fm);font-size:.65rem;color:var(--text-secondary);margin-top:2px">páginas del contenido principal</div>
+</div>
+<!-- Componentes accesorios -->
+<div style="text-align:center;background:rgba(43,181,160,.06);border:1px solid rgba(43,181,160,.15);border-radius:var(--r-sm);padding:12px">
+<div style="font-family:var(--fm);font-size:.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px">Componentes Accesorios</div>
+<div style="font-family:var(--fd);font-size:1.8rem;font-weight:800;color:var(--teal);line-height:1" id="extAccesorios">—</div>
+<div style="font-family:var(--fm);font-size:.65rem;color:var(--text-secondary);margin-top:2px">preliminares + finales + aperturas/cierres</div>
+</div>
+</div>
+
+<!-- Total -->
+<div style="text-align:center;margin-bottom:12px">
+<div style="font-family:var(--fm);font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:4px">Total de Páginas Estimadas</div>
+<div style="font-family:var(--fd);font-size:2.6rem;font-weight:800;color:var(--teal);line-height:1" id="extTotal">0</div>
+</div>
+
+<!-- Pliego múltiplo de 4 -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+<div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:var(--r-sm);padding:8px">
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase">Múltiplo de 4</div>
+<div style="font-family:var(--fd);font-size:1.4rem;font-weight:800;color:var(--orange)" id="extM4">0</div>
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted)" id="extM4blank">—</div>
+</div>
+<div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:var(--r-sm);padding:8px">
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase">Múltiplo de 8</div>
+<div style="font-family:var(--fd);font-size:1.4rem;font-weight:800;color:var(--orange)" id="extM8">0</div>
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted)" id="extM8blank">—</div>
+</div>
+<div style="text-align:center;background:rgba(255,255,255,.04);border:1px solid var(--glass-border);border-radius:var(--r-sm);padding:8px">
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted);text-transform:uppercase">Múltiplo de 16</div>
+<div style="font-family:var(--fd);font-size:1.4rem;font-weight:800;color:var(--orange)" id="extM16">0</div>
+<div style="font-family:var(--fm);font-size:.55rem;color:var(--text-muted)" id="extM16blank">—</div>
+</div>
+</div>
+
+<!-- Desglose -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;font-size:.7rem">
+<div style="background:rgba(43,181,160,.08);border-radius:var(--r-sm);padding:6px;text-align:center"><span style="color:var(--text-muted)">Preliminares</span><br><strong style="color:var(--teal)" id="extResPrelim">0</strong></div>
+<div style="background:rgba(232,115,42,.08);border-radius:var(--r-sm);padding:6px;text-align:center"><span style="color:var(--text-muted)">Cuerpo</span><br><strong style="color:var(--orange)" id="extResCuerpo">0</strong></div>
+<div style="background:rgba(255,255,255,.04);border-radius:var(--r-sm);padding:6px;text-align:center"><span style="color:var(--text-muted)">Finales</span><br><strong style="color:var(--cream)" id="extResFinales">0</strong></div>
 </div>
 </div>
 
@@ -540,6 +562,7 @@ Factor de Error — Verificación con InDesign</h3>
 <span style="display:block;margin-top:4px">• <strong style="color:var(--text-secondary)">Páginas en blanco:</strong> Los capítulos suelen comenzar en página impar (derecha). Si uno termina en impar, suma una página en blanco.</span>
 <span style="display:block">• <strong style="color:var(--text-secondary)">Pliego editorial:</strong> El total debe ser múltiplo de 4, 8 o 16 para la encuadernación.</span>
 <span style="display:block">• <strong style="color:var(--text-secondary)">Índice temático:</strong> Estimación conservadora: 2–5% del total del cuerpo principal.</span>
+<span style="display:block">• <strong style="color:var(--text-secondary)">Múltiplo de 4:</strong> Estándar para grapado. <strong>Múltiplo de 8:</strong> Cuadernillos simples. <strong>Múltiplo de 16:</strong> Cuadernillos de imprenta offset.</span>
 </div>
 </div></section>
 
@@ -713,7 +736,7 @@ Factor de Error — Verificación con InDesign</h3>
 </div>
 </div></section>
 
-<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño de Información</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 3</span><br><span style="font-size:.68rem"></span></div></footer>
+<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño Editorial</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 3</span><br><span style="font-size:.68rem">d3magindesign</span></div></footer>
 
 <script>
 // ═══ PAPER FORMAT ═══
@@ -896,13 +919,78 @@ setTimeout(drawPage,100);
 window.addEventListener('resize',()=>drawPage());
 
 // ═══ FACTOR DE ERROR ═══
-// ═══ EDITORIAL EXTENSION CALCULATOR ═══
+// ═══ EDITORIAL EXTENSION — with tooltips and page suggestions ═══
+const EXT_ITEMS={
+  prelim:[
+    {id:'extAnteportada',icon:'📄',name:'Anteportada',def:'Primera página del libro, solo lleva el título de la obra sin autor ni editorial. También llamada portadilla o falsa portada.',sug:1},
+    {id:'extPortada',icon:'📄',name:'Portada',def:'Página con el título completo, nombre del autor, editorial y año. Es la página principal de identificación del libro.',sug:1},
+    {id:'extLegales',icon:'📄',name:'Legales',def:'Página de créditos legales: ISBN, copyright ©, depósito legal, datos de la editorial, edición, impresión. Usualmente en el reverso de la portada.',sug:1},
+    {id:'extDedicatoria',icon:'📄',name:'Dedicatoria',def:'Página donde el autor dedica la obra a una persona o grupo. Breve y en página impar.',sug:1},
+    {id:'extIndice',icon:'📄',name:'Tabla de contenido',def:'Lista organizada de capítulos, secciones y sus números de página. Puede ir al inicio (estilo anglosajón) o al final (estilo europeo).',sug:2},
+    {id:'extReconocimientos',icon:'📄',name:'Reconocimientos',def:'Página donde el autor agradece a personas e instituciones que contribuyeron a la obra.',sug:1},
+    {id:'extPrologo',icon:'📄',name:'Prólogo',def:'Texto introductorio escrito por el autor o un tercero que presenta la obra, su contexto y propósito. Puede tener varias páginas.',sug:2}
+  ],
+  cuerpo:[
+    {id:'extApertura',icon:'📑',name:'Apertura de capítulo',def:'Páginas iniciales de cada capítulo con diseño especial: título destacado, imagen, cita. Cada capítulo suele comenzar en página impar.',sug:0},
+    {id:'extContenido',icon:'📖',name:'Contenido (Cuerpo)',def:'El texto principal de la obra. Este valor proviene del cálculo de texto tipográfico (fórmula de extensión). Se auto-completa al calcular.',sug:0,fromCalc:true},
+    {id:'extContinuacion',icon:'📄',name:'Continuación',def:'Páginas de desarrollo dentro de cada capítulo. Si hay subcapítulos con saltos de sección, considerar páginas adicionales.',sug:0},
+    {id:'extCierre',icon:'🔚',name:'Cierre de capítulo',def:'Páginas finales de cada capítulo. Si el capítulo termina en página impar, se agrega una página en blanco antes del siguiente.',sug:0}
+  ],
+  finales:[
+    {id:'extApendice',icon:'📑',name:'Apéndice',def:'Material complementario que amplía el contenido: tablas, documentos, glosarios, datos técnicos. No es parte esencial del texto.',sug:0},
+    {id:'extNotas',icon:'📝',name:'Notas',def:'Notas al final del libro (endnotes). Recogen las referencias, aclaraciones y citas que se señalan en el cuerpo del texto.',sug:0},
+    {id:'extIndiceTem',icon:'🔍',name:'Índice temático',def:'Lista alfabética de temas, conceptos, nombres y sus páginas. Estimación: 2–5% del total del cuerpo. Se genera al final del proceso editorial.',sug:0},
+    {id:'extBibliografia',icon:'📚',name:'Bibliografía',def:'Lista de fuentes consultadas o citadas en la obra, ordenada alfabéticamente según norma (APA, Chicago, ISO 690, etc.).',sug:0},
+    {id:'extColofon',icon:'🏁',name:'Colofón',def:'Última página impresa. Contiene datos técnicos de producción: tipografía usada, papel, imprenta, tiraje, fecha de impresión. Tradición editorial desde los incunables.',sug:1}
+  ]
+};
+
+function buildExtGrids(){
+  const tip=document.getElementById('gTip');
+  function buildGrid(containerId,items){
+    const g=document.getElementById(containerId);
+    g.innerHTML=items.map(it=>`
+      <div style="text-align:center">
+        <div style="font-size:1.2rem;margin-bottom:2px">${it.icon}</div>
+        <div class="ext-label" style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px;cursor:help;border-bottom:1px dotted rgba(232,115,42,.4);display:inline-block;padding-bottom:1px" data-def="${it.def}" data-name="${it.name}">${it.name}</div>
+        <input type="number" class="ext-input" id="${it.id}" value="${it.sug}" min="0" max="2000" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px">
+        ${it.fromCalc?'<div style="font-size:.52rem;color:var(--orange);margin-top:2px;font-family:var(--fm)" id="extFromCalc">← del cálculo de texto</div>':''}
+        <div style="font-size:.5rem;color:var(--text-muted);margin-top:1px;font-family:var(--fm)">${it.sug>0?'sugerido: '+it.sug:'opcional'}</div>
+      </div>
+    `).join('');
+  }
+  buildGrid('extPrelimGrid',EXT_ITEMS.prelim);
+  buildGrid('extCuerpoGrid',EXT_ITEMS.cuerpo);
+  buildGrid('extFinalesGrid',EXT_ITEMS.finales);
+  // Attach tooltip listeners to labels
+  document.querySelectorAll('.ext-label').forEach(el=>{
+    el.addEventListener('mouseenter',e=>{
+      tip.querySelector('.tt-tag').textContent='Definición editorial';
+      tip.querySelector('.tt-tag').style.color='var(--orange)';
+      tip.querySelector('.tt-t').textContent=el.dataset.name;
+      tip.querySelector('.tt-t').style.color='var(--orange)';
+      tip.querySelector('.tt-d').textContent=el.dataset.def;
+      tip.querySelector('.tt-bar').style.background='var(--orange)';
+      tip.classList.add('show');
+      posTip(e);
+    });
+    el.addEventListener('mousemove',posTip);
+    el.addEventListener('mouseleave',()=>tip.classList.remove('show'));
+  });
+  function posTip(e){const r=tip.getBoundingClientRect();let x=e.clientX+16,y=e.clientY-12;if(x+r.width>window.innerWidth-16)x=e.clientX-r.width-16;if(y+r.height>window.innerHeight-16)y=e.clientY-r.height-12;if(y<8)y=8;tip.style.left=x+'px';tip.style.top=y+'px'}
+}
+
 function calcExtension(){
- const ids={prelim:['extAnteportada','extPortada','extLegales','extDedicatoria','extIndice','extReconocimientos','extPrologo'],
-   cuerpo:['extApertura','extContenido','extContinuacion','extCierre'],
-   finales:['extApendice','extNotas','extIndiceTem','extBibliografia','extColofon']};
- const sum=arr=>arr.reduce((s,id)=>s+(parseInt(document.getElementById(id).value)||0),0);
- const sp=sum(ids.prelim),sc2=sum(ids.cuerpo),sf=sum(ids.finales),total=sp+sc2+sf;
+ const sumIds=arr=>arr.reduce((s,it)=>s+(parseInt(document.getElementById(it.id).value)||0),0);
+ const sp=sumIds(EXT_ITEMS.prelim);
+ const sc2=sumIds(EXT_ITEMS.cuerpo);
+ const sf=sumIds(EXT_ITEMS.finales);
+ const total=sp+sc2+sf;
+ // Cálculo de texto = contenido del cuerpo (del cálculo tipográfico)
+ const textoCalc=parseInt(document.getElementById('extContenido').value)||0;
+ // Accesorios = todo lo demás
+ const accesorios=total-textoCalc;
+
  document.getElementById('extSubPrelim').textContent=sp;
  document.getElementById('extSubCuerpo').textContent=sc2;
  document.getElementById('extSubFinales').textContent=sf;
@@ -910,24 +998,32 @@ function calcExtension(){
  document.getElementById('extResPrelim').textContent=sp;
  document.getElementById('extResCuerpo').textContent=sc2;
  document.getElementById('extResFinales').textContent=sf;
- // Pliego: round up to nearest multiple of 4
- const pliego=Math.ceil(total/4)*4;
- document.getElementById('extPliegoVal').textContent=pliego+' págs';
- const blanks=pliego-total;
- document.getElementById('extPliego').innerHTML='Pliego recomendado: <strong style="color:var(--orange)">'+pliego+' págs</strong> (múltiplo de 4)'+(blanks>0?' — <span style="color:var(--text-muted)">'+blanks+' página'+(blanks>1?'s':'')+' en blanco</span>':'');
+ document.getElementById('extCalcTexto').textContent=textoCalc>0?textoCalc:'—';
+ document.getElementById('extAccesorios').textContent=accesorios>0?accesorios:'—';
+
+ // Múltiplos de pliego
+ const m4=Math.ceil(total/4)*4;
+ const m8=Math.ceil(total/8)*8;
+ const m16=Math.ceil(total/16)*16;
+ document.getElementById('extM4').textContent=m4;
+ document.getElementById('extM8').textContent=m8;
+ document.getElementById('extM16').textContent=m16;
+ document.getElementById('extM4blank').textContent=(m4-total)+' pág'+(m4-total!==1?'s':'')+' en blanco';
+ document.getElementById('extM8blank').textContent=(m8-total)+' pág'+(m8-total!==1?'s':'')+' en blanco';
+ document.getElementById('extM16blank').textContent=(m16-total)+' pág'+(m16-total!==1?'s':'')+' en blanco';
 }
-// Auto-fill contenido from calculator result
+
 function syncExtension(){
  if(CR&&CR.pages>0){
    const p=Math.ceil(CR.pages);
    document.getElementById('extContenido').value=p;
-   document.getElementById('extFromCalc').textContent='← '+p+' págs (del cálculo de texto)';
+   const fc=document.getElementById('extFromCalc');
+   if(fc)fc.textContent='← '+p+' págs (del cálculo)';
    calcExtension();
  }
 }
 
-// Initial calc
-setTimeout(calcExtension,150);
+setTimeout(()=>{buildExtGrids();calcExtension()},150);
 
 function calcError(){
  const idPages=parseFloat(document.getElementById('errIdPages').value);
