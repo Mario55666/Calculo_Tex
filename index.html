@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Calculadora de Texto Tipográfico | UTP</title>
+<title>Calculadora de Texto Tipográfico</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0a1628;--navy-mid:#12203d;--orange:#e8732a;--orange-glow:#ff8c42;--cream:#f5f0e8;--cream-dark:#e8e0d0;--teal:#2bb5a0;--red:#e74c3c;--text-primary:#f5f0e8;--text-secondary:rgba(245,240,232,.7);--text-muted:rgba(245,240,232,.45);--glass:rgba(255,255,255,.04);--glass-border:rgba(255,255,255,.08);--r-sm:6px;--r-md:12px;--r-lg:20px;--r-xl:28px;--tr:.35s cubic-bezier(.22,1,.36,1);--fd:'Syne',sans-serif;--fb:'DM Sans',sans-serif;--fm:'JetBrains Mono',monospace}
@@ -174,7 +174,93 @@ footer{background:var(--navy-mid);border-top:1px solid var(--glass-border);paddi
 .gtt .tt-d{font-size:.75rem;color:var(--text-secondary);line-height:1.4}
 .gtt .tt-bar{width:100%;height:3px;border-radius:2px;margin-top:6px}
 
-@media print{body{background:#fff!important;color:#111!important}nav,.btn,.ss,.nav-t,.anat-ctrls,.lt,.fp-mode{display:none!important}.gc,.cp,.wc,.col-box{background:#f8f8f8!important;border:1px solid #ddd!important;color:#111!important;box-shadow:none!important}.eq{background:#f0f0f0!important}.ev,.hl,.chip-v{color:#c55a1b!important}h1,h2,h3{color:#111!important;-webkit-text-fill-color:#111!important}footer{background:#f8f8f8!important;border-top:2px solid #111!important}.fb,.fi,.fi span{color:#111!important}@page{margin:1.5cm}}
+@media print{
+  @page{margin:1.2cm 1.5cm;size:A4}
+  body{background:#fff!important;color:#111!important;font-size:9pt!important;line-height:1.4!important}
+  body::before{display:none!important}
+  /* Hide interactive-only elements */
+  nav,.nav-t,.nav-l,.btn,.btn-calc,.btn-p,.btn-s,.btn-o,.ss,.fp-mode button,
+  .act-preset,.dialog-overlay,.hb,.tag,
+  #hero .hs,#hero h1,
+  #anatomy,#fp-section .fpc-box,
+  .zoom-controls,.layer-toggles,
+  input[type="range"],
+  .info-btn,.req,
+  .il-row,.ild,
+  #ilCanvas,.anat-ctrls,
+  .fp-gen,.fptw,
+  [onclick],[oninput],
+  .error-msg{display:none!important}
+  /* Show all sections */
+  section{padding:8px 0!important;page-break-inside:avoid}
+  .ctr{max-width:100%!important;padding:0!important}
+  /* Print header */
+  #hero{padding:0!important;text-align:left!important;border-bottom:2px solid #111;padding-bottom:8px!important;margin-bottom:8px}
+  #hero::before{content:'INFORME DE CÁLCULO DE TEXTO TIPOGRÁFICO';font-family:var(--fd);font-weight:800;font-size:14pt;color:#111;display:block;margin-bottom:2px}
+  #hero::after{content:'Diseño de Información · Semana 3 · Mg. Mario Quiroz · d3magindesign · UTP 2026';font-size:8pt;color:#666;display:block}
+  /* Calculator panel */
+  .calc-wrap{display:block!important;grid-template-columns:1fr!important}
+  .cp{background:#fff!important;border:1px solid #ddd!important;padding:10px!important;margin-bottom:8px!important;page-break-inside:avoid}
+  .cp h3{font-size:10pt!important;margin-bottom:8px!important}
+  .sn{background:#111!important;color:#fff!important;width:18px!important;height:18px!important;font-size:7pt!important}
+  .fg{margin-bottom:4px!important}
+  .fg label{font-size:7pt!important;color:#666!important}
+  input,select,textarea{border:1px solid #ccc!important;background:#fafafa!important;color:#111!important;font-size:8pt!important;padding:4px 6px!important}
+  .ut{color:#333!important;background:#eee!important;font-size:6.5pt!important}
+  /* Canvas visualization */
+  .rv{page-break-before:avoid}
+  .rv-header h3{font-size:10pt!important}
+  #colBox{background:#fff!important;border:1px solid #ddd!important;padding:10px!important}
+  canvas{max-width:100%!important;border:1px solid #eee!important}
+  /* Result chips */
+  .rc{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:4px!important}
+  .chip{background:#f8f8f8!important;border:1px solid #ddd!important;padding:6px!important}
+  .chip-l{color:#666!important;font-size:6pt!important}
+  .chip-v{color:#c55a1b!important;font-size:11pt!important}
+  .chip-u{color:#888!important;font-size:6pt!important}
+  .chip.big{grid-column:1/-1!important;background:#f0f8f0!important;border-color:#2bb5a0!important}
+  .chip.big .chip-v{color:#1a8a6e!important;font-size:14pt!important}
+  .chip.big .pages-text{color:#1a8a6e!important;font-size:9pt!important}
+  /* Error section */
+  #errResult{border:1px solid #ddd!important}
+  /* Extension section */
+  #extension{page-break-before:always}
+  #extension .ctr>div{background:#fff!important;border:1px solid #ddd!important;page-break-inside:avoid}
+  .ext-input{width:50px!important;font-size:8pt!important}
+  /* Formula section */
+  #formula{page-break-before:always}
+  .wt::before{background:#ccc!important}
+  .ws{opacity:1!important;transform:none!important;padding-bottom:12px!important}
+  .si{background:#111!important;color:#fff!important;border-color:#111!important;width:24px!important;height:24px!important;font-size:8pt!important}
+  .wc{background:#fff!important;border:1px solid #ddd!important}
+  .wc-h{background:#f5f5f5!important;border-bottom:1px solid #ddd!important}
+  .wc-h h3{font-size:9pt!important;color:#111!important}
+  .wfb{color:#c55a1b!important;background:#fef5f0!important;border-color:#e8c5b0!important;font-size:7pt!important}
+  .wc-b p{font-size:8pt!important;color:#333!important}
+  .eq{background:#f8f8f8!important;border-left:3px solid #c55a1b!important}
+  .ev{background:#fef5f0!important;color:#c55a1b!important;font-size:8pt!important}
+  .ev.res{background:#e8f5f0!important;color:#1a8a6e!important}
+  .eo{color:#888!important}
+  /* FP tables */
+  #fp-section{page-break-before:always}
+  table.fpt{font-size:6.5pt!important}
+  table.fpt th{background:#111!important;color:#fff!important;padding:3px 4px!important;font-size:6pt!important}
+  table.fpt td{padding:2px 4px!important;border-bottom:1px solid #eee!important}
+  table.fpt td:first-child{background:#fff!important}
+  /* Submission / student info */
+  #sub{page-break-before:always}
+  .gc{background:#fff!important;border:1px solid #ddd!important}
+  /* Footer */
+  footer{background:#fff!important;border-top:2px solid #111!important;padding:8px 0!important;margin-top:12px}
+  .fb{color:#111!important;font-size:9pt!important}
+  .fi,.fi span{color:#444!important;font-size:7.5pt!important}
+  .fdiv{background:#111!important}
+  /* Hide paper format selector in print */
+  #paperSize,#customWGroup,#customHGroup{display:none!important}
+  /* Ensure all h2/h3 visible */
+  h2,h3{color:#111!important;-webkit-text-fill-color:#111!important;font-size:11pt!important}
+  .hl{color:#c55a1b!important}.tl{color:#1a8a6e!important}
+}
 @media(max-width:900px){.ss,.calc-wrap,.fpc-grid{grid-template-columns:1fr}.rc{grid-template-columns:1fr 1fr}.wt::before{left:14px}.ws{padding-left:48px}.ws .si{left:0;width:32px;height:32px;font-size:.7rem}}
 @media(max-width:600px){.ctr{padding:0 14px}.gc,.cp{padding:18px}.nav-l{display:none;position:absolute;top:56px;left:0;right:0;background:rgba(10,22,40,.95);backdrop-filter:blur(20px);flex-direction:column;padding:14px;border-bottom:1px solid var(--glass-border)}.nav-l.open{display:flex}.nav-t{display:block}.fr{flex-direction:column}.fa{flex-direction:column}.btn{width:100%;justify-content:center}.eq{font-size:.75rem}.fp-gen{grid-template-columns:repeat(2,1fr)}.rc{grid-template-columns:1fr}}
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}.reveal.visible{opacity:1;transform:translateY(0)}
@@ -202,12 +288,12 @@ input[type="range"]::-moz-range-thumb{width:16px;height:16px;background:var(--or
 <div class="dialog-overlay" id="dlg-inter" onclick="if(event.target===this)hideDialog('inter')"><div class="dialog-box"><button class="dialog-close" onclick="hideDialog('inter')">✕</button><h3>I. — Interlineado</h3><p>Distancia vertical entre las <strong>líneas base</strong> de dos renglones consecutivos, medida en puntos tipográficos. Ejemplo: un texto a 10 pts con interlineado 12 pts se expresa como "10/12" (diez sobre doce).</p><p>En Adobe InDesign se configura en el panel Carácter o mediante el atajo Alt + ↑/↓.</p></div></div>
 
 <!-- NAV -->
-<nav><div class="nav-i"><div class="logo">d3magin<span>design</span></div><button class="nav-t" onclick="document.querySelector('.nav-l').classList.toggle('open')">☰</button><ul class="nav-l"><li><a href="#hero" class="active">Inicio</a></li><li><a href="#calc">Calculadora</a></li><li><a href="#formula">Fórmula</a></li><li><a href="#anatomy">Interlineado</a></li><li><a href="#fp-section">F.Puntaje</a></li><li><a href="#sub">Enviar</a></li></ul></div></nav>
+<nav><div class="nav-i"><div class="logo">d3magin<span>design</span></div><button class="nav-t" onclick="document.querySelector('.nav-l').classList.toggle('open')">☰</button><ul class="nav-l"><li><a href="#hero" class="active">Inicio</a></li><li><a href="#calc">Calculadora</a></li><li><a href="#extension">Extensión</a></li><li><a href="#formula">Fórmula</a></li><li><a href="#anatomy">Interlineado</a></li><li><a href="#fp-section">F.Puntaje</a></li><li><a href="#sub">Enviar</a></li></ul></div></nav>
 
 <!-- ═══ HERO ═══ -->
 <section id="hero"><div class="ctr">
-<div class="hb">Semana 2 · Diseño de Información</div>
-<h1>Calculadora de <span class="hl">Texto</span> Tipográfico</h1>
+<div class="hb">Semana 3 · Diseño de Información</div>
+<h1><br> Calculadora de </br> <span class="hl">Texto</span> Tipográfico</h1>
 <p class="hs">Herramienta interactiva para calcular la extensión de texto compuesto usando sistemas de medición tipográfica anglosajón y francés.</p>
 <div class="tag">Paso 1 — Selecciona el sistema tipográfico</div>
 <div class="ss">
@@ -375,6 +461,85 @@ Factor de Error — Verificación con InDesign</h3>
 </div>
 </div>
 </div>
+</div>
+</div></section>
+
+<!-- ═══ EDITORIAL EXTENSION CALCULATOR ═══ -->
+<section id="extension"><div class="ctr">
+<div class="tag">Extensión Editorial</div>
+<h2>Calculador de <span class="hl">Extensión</span> de la Obra</h2>
+<p style="color:var(--text-secondary);max-width:750px;margin-bottom:16px">Proyecta la extensión final de tu publicación ingresando la cantidad de páginas estimadas en cada sección. La estructura sigue el esquema estándar de la industria editorial.</p>
+
+<!-- 1. PRELIMINARES -->
+<div style="background:rgba(43,181,160,.04);border:1px solid rgba(43,181,160,.15);border-radius:var(--r-md);padding:16px;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+<span style="font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--teal)">1</span>
+<div><h3 style="font-size:.88rem;margin:0;color:var(--teal)">Preliminares</h3>
+<p style="font-size:.68rem;color:var(--text-muted);margin:0">Elementos iniciales que preceden al contenido principal</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px">
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Anteportada</div><input type="number" class="ext-input" id="extAnteportada" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Portada</div><input type="number" class="ext-input" id="extPortada" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Legales</div><input type="number" class="ext-input" id="extLegales" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Dedicatoria</div><input type="number" class="ext-input" id="extDedicatoria" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Tabla contenido</div><input type="number" class="ext-input" id="extIndice" value="2" min="0" max="50" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Reconocimientos</div><input type="number" class="ext-input" id="extReconocimientos" value="1" min="0" max="20" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Prólogo</div><input type="number" class="ext-input" id="extPrologo" value="2" min="0" max="50" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+</div>
+<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--teal)">Subtotal Preliminares: <strong id="extSubPrelim">9</strong> págs</div>
+</div>
+
+<!-- 2. CUERPO PRINCIPAL -->
+<div style="background:rgba(232,115,42,.04);border:1px solid rgba(232,115,42,.15);border-radius:var(--r-md);padding:16px;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+<span style="font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--orange)">2</span>
+<div><h3 style="font-size:.88rem;margin:0;color:var(--orange)">Cuerpo Principal</h3>
+<p style="font-size:.68rem;color:var(--text-muted);margin:0">El núcleo de la obra — apertura, contenido y cierre de capítulos</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px">
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📑</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Apertura de capítulo</div><input type="number" class="ext-input" id="extApertura" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📖</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Contenido (Cuerpo)</div><input type="number" class="ext-input" id="extContenido" value="0" min="0" max="2000" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"><div style="font-size:.55rem;color:var(--orange);margin-top:2px;font-family:var(--fm)" id="extFromCalc">← Usa el valor de la calculadora</div></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📄</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Continuación</div><input type="number" class="ext-input" id="extContinuacion" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">🔚</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Cierre de capítulo</div><input type="number" class="ext-input" id="extCierre" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+</div>
+<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--orange)">Subtotal Cuerpo: <strong id="extSubCuerpo">0</strong> págs</div>
+</div>
+
+<!-- 3. PÁGINAS FINALES -->
+<div style="background:rgba(255,255,255,.03);border:1px solid var(--glass-border);border-radius:var(--r-md);padding:16px;margin-bottom:12px">
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+<span style="font-family:var(--fd);font-weight:800;font-size:1.1rem;color:var(--cream)">3</span>
+<div><h3 style="font-size:.88rem;margin:0">Páginas Finales</h3>
+<p style="font-size:.68rem;color:var(--text-muted);margin:0">Secciones de referencia, apoyo y cierre técnico</p></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px">
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📑</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Apéndice</div><input type="number" class="ext-input" id="extApendice" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📝</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Notas</div><input type="number" class="ext-input" id="extNotas" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">🔍</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Índice temático</div><input type="number" class="ext-input" id="extIndiceTem" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">📚</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Bibliografía</div><input type="number" class="ext-input" id="extBibliografia" value="0" min="0" max="100" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+<div style="text-align:center"><div style="font-size:1.2rem;margin-bottom:2px">🏁</div><div style="font-size:.62rem;color:var(--text-secondary);margin-bottom:3px">Colofón</div><input type="number" class="ext-input" id="extColofon" value="1" min="0" max="10" oninput="calcExtension()" style="width:100%;text-align:center;font-size:.82rem;padding:5px"></div>
+</div>
+<div style="text-align:right;margin-top:6px;font-family:var(--fm);font-size:.72rem;color:var(--text-secondary)">Subtotal Finales: <strong id="extSubFinales">1</strong> págs</div>
+</div>
+
+<!-- RESUMEN -->
+<div style="background:linear-gradient(135deg,rgba(43,181,160,.08),rgba(232,115,42,.06));border:2px solid rgba(43,181,160,.25);border-radius:var(--r-md);padding:18px;text-align:center">
+<div style="font-family:var(--fm);font-size:.65rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.12em;margin-bottom:6px">Total de Páginas Estimadas</div>
+<div style="font-family:var(--fd);font-size:2.4rem;font-weight:800;color:var(--teal);line-height:1" id="extTotal">10</div>
+<div style="font-family:var(--fm);font-size:.72rem;color:var(--text-secondary);margin-top:4px" id="extPliego">Pliego recomendado: <strong style="color:var(--orange)" id="extPliegoVal">12 págs</strong> (múltiplo de 4)</div>
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:12px;font-size:.7rem">
+<div style="background:rgba(43,181,160,.08);border-radius:var(--r-sm);padding:6px"><span style="color:var(--text-muted)">Preliminares</span><br><strong style="color:var(--teal)" id="extResPrelim">9</strong></div>
+<div style="background:rgba(232,115,42,.08);border-radius:var(--r-sm);padding:6px"><span style="color:var(--text-muted)">Cuerpo</span><br><strong style="color:var(--orange)" id="extResCuerpo">0</strong></div>
+<div style="background:rgba(255,255,255,.04);border-radius:var(--r-sm);padding:6px"><span style="color:var(--text-muted)">Finales</span><br><strong style="color:var(--cream)" id="extResFinales">1</strong></div>
+</div>
+</div>
+
+<!-- Tips -->
+<div style="background:rgba(255,255,255,.02);border:1px solid var(--glass-border);border-radius:var(--r-sm);padding:12px;margin-top:10px;font-size:.72rem;color:var(--text-muted);line-height:1.6">
+<strong style="color:var(--cream)">Consejos para la precisión:</strong>
+<span style="display:block;margin-top:4px">• <strong style="color:var(--text-secondary)">Páginas en blanco:</strong> Los capítulos suelen comenzar en página impar (derecha). Si uno termina en impar, suma una página en blanco.</span>
+<span style="display:block">• <strong style="color:var(--text-secondary)">Pliego editorial:</strong> El total debe ser múltiplo de 4, 8 o 16 para la encuadernación.</span>
+<span style="display:block">• <strong style="color:var(--text-secondary)">Índice temático:</strong> Estimación conservadora: 2–5% del total del cuerpo principal.</span>
 </div>
 </div></section>
 
@@ -548,7 +713,7 @@ Factor de Error — Verificación con InDesign</h3>
 </div>
 </div></section>
 
-<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño de Información</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 3</span><br><span style="font-size:.68rem">Todos los derechos reservados</span></div></footer>
+<footer><div class="fb">d3magindesign</div><div class="fi"><span>Docente: Mg. Mario Quiroz</span><span class="fdiv"></span><span>Curso: Diseño de Información</span><span class="fdiv"></span><span>2026</span><span class="fdiv"></span><span>Semana 3</span><br><span style="font-size:.68rem"></span></div></footer>
 
 <script>
 // ═══ PAPER FORMAT ═══
@@ -731,6 +896,39 @@ setTimeout(drawPage,100);
 window.addEventListener('resize',()=>drawPage());
 
 // ═══ FACTOR DE ERROR ═══
+// ═══ EDITORIAL EXTENSION CALCULATOR ═══
+function calcExtension(){
+ const ids={prelim:['extAnteportada','extPortada','extLegales','extDedicatoria','extIndice','extReconocimientos','extPrologo'],
+   cuerpo:['extApertura','extContenido','extContinuacion','extCierre'],
+   finales:['extApendice','extNotas','extIndiceTem','extBibliografia','extColofon']};
+ const sum=arr=>arr.reduce((s,id)=>s+(parseInt(document.getElementById(id).value)||0),0);
+ const sp=sum(ids.prelim),sc2=sum(ids.cuerpo),sf=sum(ids.finales),total=sp+sc2+sf;
+ document.getElementById('extSubPrelim').textContent=sp;
+ document.getElementById('extSubCuerpo').textContent=sc2;
+ document.getElementById('extSubFinales').textContent=sf;
+ document.getElementById('extTotal').textContent=total;
+ document.getElementById('extResPrelim').textContent=sp;
+ document.getElementById('extResCuerpo').textContent=sc2;
+ document.getElementById('extResFinales').textContent=sf;
+ // Pliego: round up to nearest multiple of 4
+ const pliego=Math.ceil(total/4)*4;
+ document.getElementById('extPliegoVal').textContent=pliego+' págs';
+ const blanks=pliego-total;
+ document.getElementById('extPliego').innerHTML='Pliego recomendado: <strong style="color:var(--orange)">'+pliego+' págs</strong> (múltiplo de 4)'+(blanks>0?' — <span style="color:var(--text-muted)">'+blanks+' página'+(blanks>1?'s':'')+' en blanco</span>':'');
+}
+// Auto-fill contenido from calculator result
+function syncExtension(){
+ if(CR&&CR.pages>0){
+   const p=Math.ceil(CR.pages);
+   document.getElementById('extContenido').value=p;
+   document.getElementById('extFromCalc').textContent='← '+p+' págs (del cálculo de texto)';
+   calcExtension();
+ }
+}
+
+// Initial calc
+setTimeout(calcExtension,150);
+
 function calcError(){
  const idPages=parseFloat(document.getElementById('errIdPages').value);
  const idChars=parseInt(document.getElementById('errIdChars').value);
@@ -1031,6 +1229,7 @@ function calculate(){
  document.querySelectorAll('.ws').forEach((ws,i)=>setTimeout(()=>ws.classList.add('done'),150*i));
 
  drawPage();renderCol(CR);hlFP(font,size);
+ syncExtension();
  // Sync interlineado viewer with calculator values
  if(size){document.getElementById('ilFontSize').value=parseInt(size)||72}
  if(lead){const sz=parseInt(size)||72;document.getElementById('ilFactor2').value=(lead/sz).toFixed(2)}
